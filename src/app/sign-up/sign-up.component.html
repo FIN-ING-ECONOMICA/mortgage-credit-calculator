@@ -1,1 +1,32 @@
-<p>sign-up works!</p>
+<section>
+  <form [formGroup]="signUpForm">
+    <div class="form-title">
+      <h1>Registro</h1>
+    </div>
+
+    <div class="form-row">
+      <input type="text" placeholder="Nombres" formControlName="firstName">
+      <input type="text" placeholder="Apellidos" formControlName="lastName">
+    </div>
+
+    <div class="form-row">
+      <input type="email" placeholder="Correo electrónico" formControlName="email">
+      <input type="text" placeholder="Celular" formControlName="phoneNumber">
+    </div>
+
+    <div class="form-row">
+      <input type="text" placeholder="Dirección" formControlName="address">
+    </div>
+
+    <div class="form-row">
+      <input type="password" placeholder="Contraseña" formControlName="address">
+
+      <div class="birthdate-input-field">
+        <label for="birthdate">Fecha de nacimiento</label>
+        <input id="birthdate" type="date" placeholder="" formControlName="birthdate">
+      </div>
+    </div>
+
+    <button type="submit">Registrate</button>
+  </form>
+</section>
