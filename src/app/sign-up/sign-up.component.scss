@@ -1,0 +1,88 @@
+section {
+  background-color: #A2DC8D;
+  border-radius: 20px;
+  padding: 25px 0 25px 0;
+}
+
+input, button {
+  border-radius: var(--input-border-radius);
+  box-sizing: border-box;
+  padding: var(--input-padding);
+  border: var(--input-border);
+}
+
+.sign-up-form {
+  background-color: #F3FFEF;
+  border-radius: 10px;
+
+  width: 40%;
+  margin: 0 auto;
+  padding: 3% 5%;
+
+  .form-title {
+    font-size: 12.5px;
+  }
+
+  div + div {
+    margin-top: 25px;
+  }
+
+  .form-row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    input {
+      width: 40%;
+      max-width: 250px;
+    }
+  }
+
+  .address-row {
+    input {
+      width: 100%;
+    }
+  }
+
+  .last-row {
+    display: flex;
+    flex-flow: row nowrap;
+
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .password-field, .birthdate-field {
+      width: 40%;
+      margin: 0;
+
+      input {
+        width: 100%;
+        max-width: 250px;
+      }
+    }
+
+    .birthdate-field {
+      display: flex;
+      flex-flow: column nowrap;
+
+      label {
+        color: #727272;
+      }
+    }
+  }
+
+  .register-button {
+    button {
+      width: 100%;
+      background-color: var(--button-color);
+
+      color: #515151;
+      font-weight: 500;
+    }
+
+    button:active {
+      border-color: #515151;
+      font-weight: 600;
+    }
+  }
+}
