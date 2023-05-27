@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet} from '@angular/router';
-import { SignUpComponent } from "./sign-up/sign-up.component";
-import { NavbarComponent } from "./navbar/navbar.component";
+import { SignUpComponent } from "./components/sign-up/sign-up.component";
+import { NavbarComponent } from "./components/navbar/navbar.component";
 
 @Component({
   selector: 'app-root',
