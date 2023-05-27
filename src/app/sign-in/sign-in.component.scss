@@ -1,0 +1,62 @@
+section {
+  background-color: #A2DC8D;
+  border-radius: 20px;
+  padding: 35px 0 35px 0;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+input, button {
+  border-radius: var(--input-border-radius);
+  box-sizing: border-box;
+  padding: var(--input-padding);
+  border: var(--input-border);
+}
+
+.sign-in-form {
+  background-color: #F3FFEF;
+  border-radius: 10px;
+
+  width: 30%;
+  padding: 5.5% 5%;
+
+  .form-title {
+    font-size: 12.5px;
+    text-align: center;
+  }
+
+  div + div {
+    margin-top: 25px;
+  }
+
+  .form-row {
+    max-width: 400px;
+
+    input {
+      width: 100%;
+    }
+  }
+
+  .sign-in-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      width: 50%;
+      min-width: 150px;
+      max-width: 400px;
+      background-color: var(--button-color);
+      color: #515151;
+      font-weight: 500;
+    }
+
+    button:active {
+      border-color: #515151;
+      font-weight: 600;
+    }
+  }
+}
