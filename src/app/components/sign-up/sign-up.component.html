@@ -1,5 +1,5 @@
 <section>
-  <form class="sign-up-form" [formGroup]="signUpForm">
+  <form class="sign-up-form" [formGroup]="signUpForm" (submit)="submitForm()">
     <div class="form-title">
       <h1>Registro</h1>
     </div>
@@ -11,11 +11,11 @@
 
     <div class="form-row">
       <input type="email" placeholder="Correo electrónico" formControlName="email">
-      <input type="text" placeholder="Celular" formControlName="phoneNumber">
+      <input type="text" placeholder="Celular" formControlName="phone">
     </div>
 
     <div class="address-row">
-      <input type="text" placeholder="Dirección" formControlName="address">
+      <input type="text" placeholder="Dirección" formControlName="homeAddress">
     </div>
 
     <div class="last-row">
@@ -25,7 +25,7 @@
       </div>
 
       <div class="password-field">
-        <input type="password" placeholder="Contraseña" formControlName="address">
+        <input type="password" placeholder="Contraseña" formControlName="password">
       </div>
     </div>
 
