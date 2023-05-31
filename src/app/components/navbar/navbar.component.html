@@ -4,7 +4,7 @@
     <h1>Crédito Mivivienda</h1>
   </section>
 
-  <ul>
+  <ul *ngIf="(authService.isLoggedIn$ | async) === false">
     <li><a routerLink="sign-in">Iniciar Sesión</a></li>
     <li><a routerLink="sign-up">Registrarse</a></li>
   </ul>
