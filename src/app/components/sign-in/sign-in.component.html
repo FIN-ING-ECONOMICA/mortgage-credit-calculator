@@ -1,5 +1,5 @@
 <section>
-  <form class="sign-in-form" [formGroup]="signInForm">
+  <form class="sign-in-form" [formGroup]="signInForm" (submit)="submitForm()">
     <div class="form-title">
       <h1>Iniciar Sesión</h1>
     </div>
@@ -9,7 +9,7 @@
     </div>
 
     <div class="form-row">
-      <input type="password" placeholder="Contraseña" formControlName="address">
+      <input type="password" placeholder="Contraseña" formControlName="password">
     </div>
 
     <div class="sign-in-button">

@@ -8,6 +8,7 @@ import { BehaviorSubject, tap } from "rxjs";
 })
 export class AuthService {
   signUpUrl = 'http://localhost:3001/signup'
+  signInUrl = 'http://localhost:3001/signin'
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable()
 
@@ -24,5 +25,16 @@ export class AuthService {
           this._isLoggedIn$.next(true);
         })
     );
+  }
+
+  signIn(user: any) {
+    console.log(user)
+    return this.http.post(this.signInUrl, user)
+      .pipe(
+        tap((response: any) => {
+          localStorage.setItem('token', response.token);
+          this._isLoggedIn$.next(true);
+        })
+      );
   }
 }

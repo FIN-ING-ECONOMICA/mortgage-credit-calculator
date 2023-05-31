@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-sign-in',
@@ -15,4 +16,15 @@ export class SignInComponent {
     password: new FormControl('')
   })
 
+  constructor(private authService: AuthService) {
+  }
+
+  submitForm() {
+    let user = {
+      email: this.signInForm.value.email ?? '',
+      password: this.signInForm.value.password ?? ''
+    }
+
+    this.authService.signIn(user).subscribe();
+  }
 }
