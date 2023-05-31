@@ -36,7 +36,6 @@ export class SignUpComponent {
       homeAddress: this.signUpForm.value.homeAddress ?? ''
     }
 
-    this.authService.createUser(user)
-      .subscribe(console.log);
+    this.authService.createUser(user).subscribe();
   }
 }
