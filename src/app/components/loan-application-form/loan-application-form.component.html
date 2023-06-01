@@ -1,1 +1,12 @@
-<p>loan-application-form works!</p>
+<form class="loan-application" [formGroup]="loanForm">
+  <h1>Solicitud del préstamo</h1>
+
+  <input type="number" min="0" placeholder="Precio del inmueble" formControlName="realStatePrice">
+
+  <input type="number" placeholder="Cuota Inicial" formControlName="initialPayment">
+
+  <select formControlName="paymentFrequency">
+    <option disabled selected value="">Frecuencia de pago</option>
+    <option *ngFor="let frequency of paymentFrequency" [value]="frequency">{{ frequency }}</option>
+  </select>
+</form>
