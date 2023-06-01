@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
 import { SignUpComponent } from "./components/sign-up/sign-up.component";
 import { SignInComponent } from "./components/sign-in/sign-in.component";
+import { LoanApplicationFormComponent } from "./components/loan-application-form/loan-application-form.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: 'sign-up', component: SignUpComponent, title: 'Registro' },
-  { path: 'sign-in', component: SignInComponent, title: 'Iniciar sesión' }
+  { path: 'sign-in', component: SignInComponent, title: 'Iniciar sesión' },
+  { path: 'loan-application', component: LoanApplicationFormComponent, title: 'Solicitud de préstamo' }
 ];

@@ -30,7 +30,7 @@ export class SignInComponent {
       isLoggedIn => {
         if (isLoggedIn) {
           console.log("Successful")
-          this.router.navigate([''])
+          this.router.navigate(['/loan-application'])
         } else {
           console.log("Failed")
         }
