@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { User } from "../models/user";
-import { BehaviorSubject, tap } from "rxjs";
+import { BehaviorSubject, catchError, map, of, tap } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -27,13 +27,21 @@ export class AuthService {
     );
   }
 
-  signIn(user: any) {
-    console.log(user)
-    return this.http.post(this.signInUrl, user)
+  login(user: any) {
+    return this.http.post(this.signInUrl, user, { observe: 'response'})
       .pipe(
-        tap((response: any) => {
-          localStorage.setItem('token', response.token);
-          this._isLoggedIn$.next(true);
+        map((response: HttpResponse<any>) => {
+          if (response.status === 200) {
+            localStorage.setItem('token', response.body.token);
+            this._isLoggedIn$.next(true);
+            return true;
+          } else {
+            throw new Error("Invalid credentials")
+          }
+        }),
+        catchError(error => {
+          console.log(error);
+          return of(false);
         })
       );
   }
