@@ -7,6 +7,6 @@
 
   <select formControlName="paymentFrequency">
     <option disabled selected value="">Frecuencia de pago</option>
-    <option *ngFor="let frequency of paymentFrequency" [value]="frequency">{{ frequency }}</option>
+    <option *ngFor="let frequency of frequencies" [value]="frequency">{{ frequency }}</option>
   </select>
 </form>

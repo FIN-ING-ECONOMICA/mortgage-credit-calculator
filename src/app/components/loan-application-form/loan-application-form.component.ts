@@ -15,14 +15,15 @@ export class LoanApplicationFormComponent {
     initialPayment: new FormControl(''),
     paymentFrequency: new FormControl('')
   })
-  paymentFrequency = [
-    "Diario",
-    "Quincenal",
-    "Mensual",
-    "Bimestral",
-    "Trimestral",
-    "Cuatrimestral",
-    "Semestral",
-    "Anual"
-  ]
+  paymentFrequency: Record<string, number> = {
+    Diario: 1,
+    Quincenal: 15,
+    Mensual: 30,
+    Bimestral: 60,
+    Trimestral: 90,
+    Cuatrimestral: 120,
+    Semestral: 180,
+    Anual: 360
+  }
+  frequencies = Object.keys(this.paymentFrequency)
 }
