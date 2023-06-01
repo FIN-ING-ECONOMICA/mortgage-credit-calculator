@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AuthService } from "../../services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-sign-in',
@@ -16,7 +17,7 @@ export class SignInComponent {
     password: new FormControl('')
   })
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   submitForm() {
@@ -25,6 +26,14 @@ export class SignInComponent {
       password: this.signInForm.value.password ?? ''
     }
 
-    this.authService.signIn(user).subscribe();
+    this.authService.login(user).subscribe(
+      isLoggedIn => {
+        if (isLoggedIn) {
+          console.log("Successful")
+          this.router.navigate([''])
+        } else {
+          console.log("Failed")
+        }
+    });
   }
 }
