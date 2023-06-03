@@ -19,7 +19,7 @@ export class LoanApplicationFormComponent {
     years: new FormControl(''),
     paymentPeriod: new FormControl(''),
     initialPayment: new FormControl(''),
-    loanPayment: new FormControl(''),
+    loanAmount: new FormControl(''),
     tep: new FormControl(''),
     period: new FormControl('')
   })
@@ -42,5 +42,11 @@ export class LoanApplicationFormComponent {
     let percentage = Number(this.loanForm.get('initialPaymentPercentage')?.value)
     let realStatePrice = Number(this.loanForm.get('realStatePrice')?.value)
     return `S/ ${this.financialService.calculateInitialPayment(percentage, realStatePrice).toFixed(2)}`
+  }
+
+  renderLoan(): string {
+    let percentage = Number(this.loanForm.get('initialPaymentPercentage')?.value)
+    let realStatePrice = Number(this.loanForm.get('realStatePrice')?.value)
+    return `S/ ${this.financialService.calculateLoan(percentage, realStatePrice).toFixed(2)}`
   }
 }
