@@ -1,12 +1,57 @@
 <form class="loan-application" [formGroup]="loanForm">
   <h1>Solicitud del préstamo</h1>
 
-  <input type="number" min="0" placeholder="Precio del inmueble" formControlName="realStatePrice">
+  <section class="form-grid">
+    <div class="col">
+      <div>
+        <div>Precio del inmueble</div>
+        <input type="number" min="0" placeholder="Precio del inmueble" [formControlName]="'realStatePrice'">
+      </div>
 
-  <input type="number" placeholder="Cuota Inicial" formControlName="initialPayment">
+      <div>
+        <div>Porcentaje de la cuota inicial (debe ser mayor o igual a 7.5%)</div>
+        <input type="number" placeholder="Porcentaje de la cuota inicial" [formControlName]="'initialPaymentPercentage'">
+      </div>
 
-  <select formControlName="paymentFrequency">
-    <option disabled selected value="">Frecuencia de pago</option>
-    <option *ngFor="let frequency of frequencies" [value]="frequency">{{ frequency }}</option>
-  </select>
+      <div>
+        <div>Tasa Efectiva Anual (TEA)</div>
+        <input type="number" placeholder="TEA%" [formControlName]="'tea'">
+      </div>
+
+      <div>
+        <div>Frecuencia de pago</div>
+        <select [formControlName]="'paymentFrequency'">
+          <option disabled selected value="">Frecuencia de pago</option>
+          <option *ngFor="let frequency of frequencies" [value]="frequency">{{ frequency }}</option>
+        </select>
+      </div>
+
+      <div>
+        <div>Duración del préstamo (en años)</div>
+        <input type="number" placeholder="Cantidad de años del préstamo" [formControlName]="'years'">
+      </div>
+    </div>
+
+    <div class="col">
+      <div>
+        <div>Cuota Inicial</div>
+        <textarea readonly class="display" [formControlName]="'initialPayment'" [value]="renderInitialPayment()"></textarea>
+      </div>
+
+      <div>
+        <div>Préstamo</div>
+        <textarea readonly class="display" [formControlName]="'loanAmount'"></textarea>
+      </div>
+
+      <div>
+        <div>TEP</div>
+        <textarea readonly class="display" [formControlName]="'tep'"></textarea>
+      </div>
+
+      <div>
+        <div>Cantidad de periodos</div>
+        <textarea readonly class="display" [formControlName]="'period'"></textarea>
+      </div>
+    </div>
+  </section>
 </form>
