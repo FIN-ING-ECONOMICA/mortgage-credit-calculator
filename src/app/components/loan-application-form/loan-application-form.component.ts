@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FinancialService } from "../../services/financial.service";
 
 @Component({
   selector: 'app-loan-application-form',
@@ -31,13 +32,12 @@ export class LoanApplicationFormComponent {
   }
   frequencies = Object.keys(this.paymentFrequency);
 
-  calculateInitialPayment(): string {
-    let percentage = Number(this.loanForm.get('initialPaymentPercentage')?.value)
-    let realStatePrice = Number(this.loanForm.get('realStatePrice')?.value)
-    return (realStatePrice * percentage / 100).toFixed(2).toString()
+  constructor(private financialService: FinancialService) {
   }
 
   renderInitialPayment(): string {
-    return `S/ ${this.calculateInitialPayment()}`
+    let percentage = Number(this.loanForm.get('initialPaymentPercentage')?.value)
+    let realStatePrice = Number(this.loanForm.get('realStatePrice')?.value)
+    return `S/ ${this.financialService.calculateInitialPayment(percentage, realStatePrice).toFixed(2)}`
   }
 }
