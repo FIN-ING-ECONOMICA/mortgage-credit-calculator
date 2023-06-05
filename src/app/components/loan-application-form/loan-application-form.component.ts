@@ -11,6 +11,7 @@ import { FinancialService } from "../../services/financial.service";
   styleUrls: ['./loan-application-form.component.scss']
 })
 export class LoanApplicationFormComponent {
+
   loanForm   = new FormGroup({
     realStatePrice: new FormControl('', [Validators.required, Validators.min(0)]),
     initialPaymentPercentage: new FormControl('', [Validators.required, Validators.min(0)]),
@@ -36,17 +37,5 @@ export class LoanApplicationFormComponent {
   frequencies = Object.keys(this.paymentFrequency);
 
   constructor(private financialService: FinancialService) {
-  }
-
-  renderInitialPayment(): string {
-    let percentage = Number(this.loanForm.get('initialPaymentPercentage')?.value)
-    let realStatePrice = Number(this.loanForm.get('realStatePrice')?.value)
-    return `S/ ${this.financialService.calculateInitialPayment(percentage, realStatePrice).toFixed(2)}`
-  }
-
-  renderLoan(): string {
-    let percentage = Number(this.loanForm.get('initialPaymentPercentage')?.value)
-    let realStatePrice = Number(this.loanForm.get('realStatePrice')?.value)
-    return `S/ ${this.financialService.calculateLoan(percentage, realStatePrice).toFixed(2)}`
   }
 }
