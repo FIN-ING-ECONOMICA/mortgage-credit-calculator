@@ -16,19 +16,27 @@ input[type=number] {
   border-radius: 10px;
 
   width: 80%;
-  padding: 3.5% 5%;
+  padding: 1% 5%;
 }
 
 .form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
   //border: 3px solid #3c82da;
 
-  .col:nth-child(1) {
-    //border: 3px solid #8BD5FF;
+  .col {
+    //border: 3px solid #e59113;
+    width: 45%;
+
     display: flex;
     flex-flow: column nowrap;
     gap: 20px;
+
+    div:nth-child(2) {
+      //border: 3px solid #313131;
+      div {
+        width: 100%;
+        max-width: 250px;
+      }
+    }
   }
 }
 
@@ -66,13 +74,34 @@ select {
   max-width: 250px;
   height: 45px;
   font-size: 15px;
-  color: #8C8C8C;
+  color: #343434;
   padding: 0 var(--input-padding);
+  border-radius: var(--input-border-radius);
 
   option:nth-child(1) {
     color: #8C8C8C;
   }
-  option {
-    color: #343434;
+}
+
+.calc-button {
+  margin-top: 20px;
+
+  button {
+    width: 100%;
+    max-width: 200px;
+
+    padding: var(--input-padding);
+    border-radius: var(--input-border-radius);
+
+    background-color: #2FB4FF;
+    border: 1px solid #076CA5;
+
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  button:active {
+    font-weight: 600;
   }
 }
