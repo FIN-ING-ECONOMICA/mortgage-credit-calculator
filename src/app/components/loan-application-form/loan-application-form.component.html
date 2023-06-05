@@ -1,5 +1,5 @@
 <form class="loan-application" [formGroup]="loanForm">
-  <h1>Solicitud del préstamo</h1>
+  <h1>Cálculo del préstamo</h1>
 
   <section class="form-grid">
     <div class="col">
@@ -29,28 +29,6 @@
       <div>
         <div>Duración del préstamo (en años)</div>
         <input type="number" placeholder="Cantidad de años del préstamo" [formControlName]="'years'">
-      </div>
-    </div>
-
-    <div class="col">
-      <div>
-        <div>Cuota Inicial</div>
-        <textarea readonly class="display" [formControlName]="'initialPayment'" [value]="renderInitialPayment()"></textarea>
-      </div>
-
-      <div>
-        <div>Préstamo</div>
-        <textarea readonly class="display" [formControlName]="'loanAmount'" [value]="renderLoan()"></textarea>
-      </div>
-
-      <div>
-        <div>TEP</div>
-        <textarea readonly class="display" [formControlName]="'tep'"></textarea>
-      </div>
-
-      <div>
-        <div>Cantidad de periodos</div>
-        <textarea readonly class="display" [formControlName]="'period'"></textarea>
       </div>
     </div>
   </section>
