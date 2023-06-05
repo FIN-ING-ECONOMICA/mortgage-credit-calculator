@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { FinancialService } from "../../services/financial.service";
+import { SharedService } from "../../services/shared.service";
 
 @Component({
   selector: 'app-loan-application-form',
@@ -36,6 +37,19 @@ export class LoanApplicationFormComponent {
   }
   frequencies = Object.keys(this.paymentFrequency);
 
-  constructor(private financialService: FinancialService) {
+  constructor(private financialService: FinancialService, private sharedService: SharedService) {
+  }
+
+  submitForm() {
+    let loan = {
+      realStatePrice: this.loanForm.value.realStatePrice ?? '',
+      initialPaymentPercentage: this.loanForm.value.initialPaymentPercentage ?? '',
+      tea: this.loanForm.value.tea ?? '',
+      paymentFrequency: this.paymentFrequency[this.loanForm.value.paymentFrequency ?? ''],
+      years: this.loanForm.value.years ?? ''
+    }
+
+    console.log(loan)
+    this.sharedService.loan = loan;
   }
 }
