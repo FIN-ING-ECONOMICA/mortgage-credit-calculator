@@ -25,7 +25,7 @@ export class LoanApplicationFormComponent {
     initialPayment: new FormControl(''),
     loanAmount: new FormControl(''),
     tep: new FormControl(''),
-    period: new FormControl('')
+    periods: new FormControl('')
   })
   paymentFrequency: Record<string, number> = {
     Diario: 1,
@@ -58,7 +58,7 @@ export class LoanApplicationFormComponent {
       tep: this.convertTepTo7Decimals(Number(this.loanForm.value.tea) ?? 0, this.paymentFrequency[this.loanForm.value.paymentFrequency ?? '']),
       paymentFrequency: { [this.loanForm.value.paymentFrequency ?? '']: this.paymentFrequency[this.loanForm.value.paymentFrequency ?? ''] },
       years: Number(this.loanForm.value.years) ?? 0,
-      period: this.financialService.getPeriod(this.paymentFrequency[this.loanForm.value.paymentFrequency ?? ''], Number(this.loanForm.value.years) ?? 0)
+      periods: this.financialService.getPeriod(this.paymentFrequency[this.loanForm.value.paymentFrequency ?? ''], Number(this.loanForm.value.years) ?? 0)
     }
     return loan
   }

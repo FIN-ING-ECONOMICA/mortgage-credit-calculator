@@ -14,7 +14,7 @@ export class SharedService {
     tep: 0,
     paymentFrequency: { ['']: 0 },
     years: 0,
-    period: 0
+    periods: 0
   }
 
   constructor() { }
