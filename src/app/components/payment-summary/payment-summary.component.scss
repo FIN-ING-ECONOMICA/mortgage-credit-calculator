@@ -1,0 +1,15 @@
+.loan-table {
+  border-collapse: collapse;
+
+  td {
+    padding: 8px;
+    border: 1px solid black;
+  }
+}
+
+.inside-table {
+  td {
+    padding: 0;
+    border: 0;
+  }
+}

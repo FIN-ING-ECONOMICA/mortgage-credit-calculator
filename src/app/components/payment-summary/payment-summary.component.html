@@ -1,1 +1,12 @@
-<p>payment-summary works!</p>
+<table class="loan-table">
+  <tr *ngFor="let header of headersAndValues| keyvalue">
+    <td>{{ header.key }}</td> <!-- Display header in the first column -->
+    <td>
+      <table class="inside-table">
+        <tr>
+          <td>{{ header.value }}</td> <!-- Display corresponding data in the second column -->
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
