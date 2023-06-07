@@ -11,7 +11,7 @@ export class FinancialService {
     return realStatePrice * percentage / 100
   }
 
-  calculateLoan(percentage: number, realStatePrice: number) {
+  calculateLoan(percentage: number, realStatePrice: number): number {
     let initialPayment = this.calculateInitialPayment(percentage, realStatePrice)
     return realStatePrice - initialPayment
   }
@@ -21,5 +21,9 @@ export class FinancialService {
     let exponent = paymentFrequency / 360;
     let tep = (base ** exponent) - 1;
     return tep
+  }
+
+  getPeriod(paymentFrequency: number, years: number): number {
+    return (360 / paymentFrequency) * years
   }
 }
