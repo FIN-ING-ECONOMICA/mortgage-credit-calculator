@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedService } from "../../services/shared.service";
+import { PaymentTableComponent } from "../payment-table/payment-table.component";
 
 @Component({
   selector: 'app-payment-summary',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PaymentTableComponent],
   templateUrl: './payment-summary.component.html',
   styleUrls: ['./payment-summary.component.scss']
 })
