@@ -105,3 +105,17 @@ select {
     font-weight: 600;
   }
 }
+
+.errors {
+  box-sizing: border-box;
+
+  width: 100%;
+  max-width: 250px;
+
+  padding: 1%;
+
+  div {
+    color: #d23030;
+    font-size: 13px;
+  }
+}
