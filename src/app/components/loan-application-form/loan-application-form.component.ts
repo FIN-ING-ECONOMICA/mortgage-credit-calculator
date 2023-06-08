@@ -18,9 +18,9 @@ export class LoanApplicationFormComponent {
   loanForm   = new FormGroup({
     realStatePrice: new FormControl('', [Validators.required, Validators.min(0)]),
     initialPaymentPercentage: new FormControl('', [Validators.required, Validators.min(0)]),
-    tea: new FormControl(''),
-    paymentFrequency: new FormControl(''),
-    years: new FormControl('')
+    tea: new FormControl('', [Validators.required, Validators.min(0)]),
+    paymentFrequency: new FormControl('',[Validators.required]),
+    years: new FormControl('', [Validators.required, Validators.min(0)])
   })
   paymentFrequency: Record<string, number> = {
     Diario: 1,
