@@ -1,1 +1,19 @@
-<p>payment-table works!</p>
+<table>
+  <thead>
+    <tr>
+      <th *ngFor="let header of tableHeaders">{{ header }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of tableData">
+      <td>{{ row.paymentIndex }}</td>
+      <td>{{ row.tea }}%</td>
+      <td>{{ row.tep }}%</td>
+      <td>{{ row.initialBalance }}</td>
+      <td>{{ row.interestAmount }}</td>
+      <td>{{ row.periodicPayment }}</td>
+      <td>{{ row.amortization }}</td>
+      <td>{{ row.finalBalance }}</td>
+    </tr>
+  </tbody>
+</table>
