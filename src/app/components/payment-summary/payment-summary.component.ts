@@ -22,7 +22,7 @@ export class PaymentSummaryComponent {
     return {
       'Precio de Venta': 'S/' + this.sharedService.loan.realStatePrice,
       '% Cuota Inicial': this.sharedService.loan.initialPaymentPercentage + '%',
-      'Préstamo': 'S/' + this.sharedService.loan.tea,
+      'Préstamo': 'S/' + this.sharedService.loan.initialPayment,
       'Frecuencia': this.getFrequencyKey(this.sharedService.loan.paymentFrequency),
       'Cantidad de años': this.sharedService.loan.years,
       'Cantidad de periodos': this.sharedService.loan.periods
