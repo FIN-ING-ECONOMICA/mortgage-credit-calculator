@@ -58,6 +58,6 @@
   </section>
 
   <div class="calc-button">
-    <button type="submit">Calcular préstamo</button>
+    <button type="submit" [disabled]="!loanForm.valid">Calcular préstamo</button>
   </div>
 </form>

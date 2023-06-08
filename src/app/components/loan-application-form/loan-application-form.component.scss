@@ -104,6 +104,17 @@ select {
   button:active {
     font-weight: 600;
   }
+
+  button:disabled {
+    background-color: #cbcbcb;
+    border: 1px solid #cbcbcb;
+
+    color: #606060;
+  }
+
+  button:disabled:active {
+    font-weight: 500;
+  }
 }
 
 .errors {
