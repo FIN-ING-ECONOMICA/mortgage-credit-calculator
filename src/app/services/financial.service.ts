@@ -26,4 +26,16 @@ export class FinancialService {
   getPeriod(paymentFrequency: number, years: number): number {
     return (360 / paymentFrequency) * years
   }
+
+  calculateInterestAmount(initialBalance: number, interestRate: number): number {
+    return initialBalance * (interestRate / 100)
+  }
+
+  // Método Francés
+  calculatePeriodicPayment(initialBalance: number, tep: number, periods: number, currentPeriod: number): number {
+    let numerator = (tep / 100) * ((1 + tep / 100) ** (periods - currentPeriod + 1))
+    let denominator = ((1 + tep / 100) ** (periods - currentPeriod + 1)) - 1
+    let r = initialBalance * (numerator / denominator)
+    return r
+  }
 }
