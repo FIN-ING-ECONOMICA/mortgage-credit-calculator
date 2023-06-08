@@ -38,4 +38,12 @@ export class FinancialService {
     let r = initialBalance * (numerator / denominator)
     return r
   }
+
+  calculateAmortization(periodicPayment: number, interestAmount: number): number {
+    return periodicPayment - interestAmount
+  }
+
+  calculateFinalBalance(initialBalance: number, amortization: number): number {
+    return initialBalance - amortization;
+  }
 }
