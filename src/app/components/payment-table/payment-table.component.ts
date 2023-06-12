@@ -19,6 +19,7 @@ export class PaymentTableComponent {
     'N°',
     'TEA',
     'TEP',
+    'Plazo de gracia',
     'Saldo Inicial',
     'Interés',
     'Cuota',
@@ -30,7 +31,7 @@ export class PaymentTableComponent {
     this.tableData = this.calculateTableData()
   }
 
-  calculateTableData(): Array<PeriodicPayment> {
+  calculateTableData(): Array<  PeriodicPayment> {
     let _periodicPayment: PeriodicPayment = this.convertLoanToPeriodicPayment(this.sharedService.loan)
     let arraySize = _periodicPayment.periods;
     let _tableData: Array<PeriodicPayment> = []
@@ -53,6 +54,7 @@ export class PaymentTableComponent {
         finalBalance: finalBalance,
         tea: _periodicPayment.tea,
         tep: _periodicPayment.tep,
+        gracePeriod: 'No',
         interestAmount: interestAmount,
         periodicPayment: periodicPayment,
         amortization: amortization,
@@ -70,6 +72,7 @@ export class PaymentTableComponent {
       finalBalance: 0,
       tea: loan.tea,
       tep: loan.tep,
+      gracePeriod: 'No',
       interestAmount: 0,
       periodicPayment: 0,
       amortization: 0,

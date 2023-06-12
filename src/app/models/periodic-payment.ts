@@ -5,6 +5,7 @@ export interface PeriodicPayment {
   finalBalance: number,
   tea: number,
   tep: number,
+  gracePeriod: string,
   interestAmount: number,
   periodicPayment: number,
   amortization: number,
