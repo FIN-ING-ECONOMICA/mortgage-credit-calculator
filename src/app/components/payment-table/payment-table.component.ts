@@ -24,7 +24,8 @@ export class PaymentTableComponent {
     'Interés',
     'Cuota',
     'Amortización',
-    'Saldo Final'
+    'Saldo Final',
+    'Acción'
   ]
   isCellEditable: boolean = true
 
