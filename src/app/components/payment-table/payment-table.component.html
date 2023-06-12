@@ -7,7 +7,7 @@
   <tbody>
     <tr *ngFor="let row of tableData">
       <td>{{ row.paymentIndex }}</td>
-      <td>{{ row.tea }}%</td>
+      <td id="tea-cell" [contentEditable]="isCellEditable" (input)="updateTableData(row, 'TEA', 'tea-cell')">{{ row.tea }}%</td>
       <td>{{ row.tep }}%</td>
       <td>{{ row.gracePeriod }}</td>
       <td>{{ row.initialBalance }}</td>
