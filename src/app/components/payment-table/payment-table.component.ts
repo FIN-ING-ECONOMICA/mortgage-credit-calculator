@@ -28,38 +28,38 @@ export class PaymentTableComponent {
   ]
 
   constructor(private sharedService: SharedService, private financialService: FinancialService) {
-    this.tableData = this.calculateTableData()
+    let periodicPayment: PeriodicPayment = this.convertLoanToPeriodicPayment(this.sharedService.loan)
+    this.tableData = this.calculateTableData(periodicPayment)
   }
 
-  calculateTableData(): Array<  PeriodicPayment> {
-    let _periodicPayment: PeriodicPayment = this.convertLoanToPeriodicPayment(this.sharedService.loan)
-    let arraySize = _periodicPayment.periods;
+  calculateTableData(periodicPayment: PeriodicPayment): Array<PeriodicPayment> {
+    let arraySize = periodicPayment.periods;
     let _tableData: Array<PeriodicPayment> = []
 
     for (let i = 0; i < arraySize; i++) {
 
       if (i > 0) {
-        _periodicPayment = _tableData[i - 1]
+        periodicPayment = _tableData[i - 1]
       }
 
-      let initialBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(_periodicPayment.initialBalance, _periodicPayment.amortization))
-      let interestAmount = this.roundTo2Decimals(this.financialService.calculateInterestAmount(initialBalance, _periodicPayment.tep))
-      let periodicPayment = this.roundTo2Decimals(this.financialService.calculatePeriodicPayment(initialBalance, _periodicPayment.tep, _periodicPayment.periods, i + 1))
-      let amortization = this.roundTo2Decimals(this.financialService.calculateAmortization(periodicPayment, interestAmount))
+      let initialBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(periodicPayment.initialBalance, periodicPayment.amortization))
+      let interestAmount = this.roundTo2Decimals(this.financialService.calculateInterestAmount(initialBalance, periodicPayment.tep))
+      let _periodicPayment = this.roundTo2Decimals(this.financialService.calculatePeriodicPayment(initialBalance, periodicPayment.tep, periodicPayment.periods, i + 1))
+      let amortization = this.roundTo2Decimals(this.financialService.calculateAmortization(_periodicPayment, interestAmount))
       let finalBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(initialBalance, amortization))
 
       _tableData.push({
         paymentIndex: i + 1,
         initialBalance: initialBalance,
         finalBalance: finalBalance,
-        tea: _periodicPayment.tea,
-        tep: _periodicPayment.tep,
+        tea: periodicPayment.tea,
+        tep: periodicPayment.tep,
         gracePeriod: 'No',
         interestAmount: interestAmount,
-        periodicPayment: periodicPayment,
+        periodicPayment: _periodicPayment,
         amortization: amortization,
-        paymentFrequency: _periodicPayment.paymentFrequency,
-        periods: _periodicPayment.periods
+        paymentFrequency: periodicPayment.paymentFrequency,
+        periods: periodicPayment.periods
       })
     }
     return _tableData
