@@ -10,5 +10,6 @@ export interface PeriodicPayment {
   periodicPayment: number,
   amortization: number,
   paymentFrequency: { [key: string]: number },
-  periods: number
+  periods: number,
+  edit: boolean
 }

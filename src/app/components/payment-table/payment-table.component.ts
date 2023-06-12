@@ -27,15 +27,10 @@ export class PaymentTableComponent {
     'Saldo Final',
     'Acción'
   ]
-  isCellEditable: boolean = true
 
   constructor(private sharedService: SharedService, private financialService: FinancialService) {
     let periodicPayment: PeriodicPayment = this.convertLoanToPeriodicPayment(this.sharedService.loan)
     this.tableData = this.calculateTableData(periodicPayment)
-  }
-
-  updateTableData(row: any, name: string, id: any) {
-    let cellContent: string | null | undefined = this.getEditableCellContent(id)
   }
 
   calculateTableData(periodicPayment: PeriodicPayment): Array<PeriodicPayment> {
@@ -65,7 +60,8 @@ export class PaymentTableComponent {
         periodicPayment: _periodicPayment,
         amortization: amortization,
         paymentFrequency: periodicPayment.paymentFrequency,
-        periods: periodicPayment.periods
+        periods: periodicPayment.periods,
+        edit: false
       })
     }
     return _tableData
@@ -83,16 +79,13 @@ export class PaymentTableComponent {
       periodicPayment: 0,
       amortization: 0,
       paymentFrequency: loan.paymentFrequency,
-      periods: loan.periods
+      periods: loan.periods,
+      edit: false
     }
     return periodicPayment
   }
 
   roundTo2Decimals(num: number) {
     return Number(num.toFixed(2))
-  }
-
-  getEditableCellContent(id: string): string | null | undefined {
-    return document.getElementById(id)?.textContent;
   }
 }
