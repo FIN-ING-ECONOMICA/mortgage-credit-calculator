@@ -4,11 +4,12 @@ import { PeriodicPayment } from "../../models/periodic-payment";
 import { SharedService } from "../../services/shared.service";
 import { Loan } from "../../models/loan";
 import { FinancialService } from "../../services/financial.service";
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-payment-table',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './payment-table.component.html',
   styleUrls: ['./payment-table.component.scss']
 })
@@ -27,6 +28,9 @@ export class PaymentTableComponent {
     'Saldo Final',
     'Acción'
   ]
+  paymentsForm = new FormGroup({
+    tea: new FormControl(0, [Validators.min(0)])
+  })
 
   constructor(private sharedService: SharedService, private financialService: FinancialService) {
     let periodicPayment: PeriodicPayment = this.convertLoanToPeriodicPayment(this.sharedService.loan)
@@ -87,5 +91,9 @@ export class PaymentTableComponent {
 
   roundTo2Decimals(num: number) {
     return Number(num.toFixed(2))
+  }
+
+  onEdit(periodicPayment: PeriodicPayment) {
+    periodicPayment.edit = !periodicPayment.edit;
   }
 }

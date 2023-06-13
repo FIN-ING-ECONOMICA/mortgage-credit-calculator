@@ -1,21 +1,36 @@
-<table>
-  <thead>
-    <tr>
-      <th *ngFor="let header of tableHeaders">{{ header }}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let row of tableData">
-      <td>{{ row.paymentIndex }}</td>
-      <td id="tea-cell" [contentEditable]="isCellEditable" (input)="updateTableData(row, 'TEA', 'tea-cell')">{{ row.tea }}%</td>
-      <td>{{ row.tep }}%</td>
-      <td>{{ row.gracePeriod }}</td>
-      <td>{{ row.initialBalance }}</td>
-      <td>{{ row.interestAmount }}</td>
-      <td>{{ row.periodicPayment }}</td>
-      <td>{{ row.amortization }}</td>
-      <td>{{ row.finalBalance }}</td>
-      <td><button>Editar</button></td>
-    </tr>
-  </tbody>
-</table>
+<form [formGroup]="paymentsForm" action="">
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let header of tableHeaders">{{ header }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of tableData">
+        <td>{{ row.paymentIndex }}</td>
+        <td>
+          <div *ngIf="row.edit">
+            <input [formControlName]="'tea'" type="number">
+          </div>
+          <div *ngIf="!row.edit">{{ row.tea }}%</div>
+        </td>
+        <td>{{ row.tep }}%</td>
+        <td>{{ row.gracePeriod }}</td>
+        <td>{{ row.initialBalance }}</td>
+        <td>{{ row.interestAmount }}</td>
+        <td>{{ row.periodicPayment }}</td>
+        <td>{{ row.amortization }}</td>
+        <td>{{ row.finalBalance }}</td>
+        <td>
+          <div *ngIf="row.edit">
+            <button (click)="onEdit(row)">Guardar</button>
+            <button (click)="row.edit = false">Cancelar</button>
+          </div>
+          <div *ngIf="!row.edit">
+            <button (click)="onEdit(row)">Editar</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
