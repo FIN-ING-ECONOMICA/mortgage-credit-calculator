@@ -28,9 +28,7 @@ export class PaymentTableComponent {
     'Saldo Final',
     'Acción'
   ]
-  paymentsForm = new FormGroup({
-    tea: new FormControl(0, [Validators.min(0)])
-  })
+  newTea: number = 0
 
   constructor(private sharedService: SharedService, private financialService: FinancialService) {
     let periodicPayment: PeriodicPayment = this.convertLoanToPeriodicPayment(this.sharedService.loan)
@@ -95,5 +93,11 @@ export class PaymentTableComponent {
 
   onEdit(periodicPayment: PeriodicPayment) {
     periodicPayment.edit = !periodicPayment.edit;
+  }
+
+  onSave(periodicPayment: PeriodicPayment) {
+    let rowIndex = periodicPayment.paymentIndex - 1
+    console.log('Index:', rowIndex)
+    console.log('TEA:', this.newTea)
   }
 }
