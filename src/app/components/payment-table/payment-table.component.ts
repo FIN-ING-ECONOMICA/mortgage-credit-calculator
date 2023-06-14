@@ -29,10 +29,12 @@ export class PaymentTableComponent {
     'Acción'
   ]
   newTea: number = 0
+  roundTo7Decimals: (num: (number | string)) => number
 
   constructor(private sharedService: SharedService, private financialService: FinancialService) {
     let periodicPayment: PeriodicPayment = this.convertLoanToPeriodicPayment(this.sharedService.loan)
     this.tableData = this.calculateTableData(periodicPayment)
+    this.roundTo7Decimals = this.sharedService.roundTo7Decimals
   }
 
   calculateTableData(periodicPayment: PeriodicPayment): Array<PeriodicPayment> {
@@ -120,7 +122,7 @@ export class PaymentTableComponent {
         currentPayment.initialBalance = this.sharedService.loan.initialPayment
       }
 
-      let tep = this.financialService.teaToTep(currentPayment.tea, this.getPaymentFrequencyValue(currentPayment.paymentFrequency))
+      let tep = this.roundTo7Decimals(this.financialService.teaToTep(currentPayment.tea, this.getPaymentFrequencyValue(currentPayment.paymentFrequency)))
       let interestAmount = this.roundTo2Decimals(this.financialService.calculateInterestAmount(currentPayment.initialBalance, tep))
       let periodicPayment = this.roundTo2Decimals(this.financialService.calculatePeriodicPayment(currentPayment.initialBalance, tep, currentPayment.periods, i + 1))
       let amortization = this.roundTo2Decimals(this.financialService.calculateAmortization(periodicPayment, interestAmount))

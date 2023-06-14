@@ -18,4 +18,9 @@ export class SharedService {
   }
 
   constructor() { }
+
+  roundTo7Decimals(num: number | string): number {
+    num = Number(num).toFixed(7)
+    return Number(num)
+  }
 }
