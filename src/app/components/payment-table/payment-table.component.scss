@@ -1,3 +1,16 @@
+/* Chrome, Safari, Edge, Opera
+  Removes the up and down buttons from the <input type="number"> */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 table {
   font-size: 12px;
   border-collapse: collapse;
@@ -10,4 +23,18 @@ table {
 td {
   padding: 8px;
   border: 1px solid black;
+}
+
+.edit-tea {
+  input {
+    width: 60px;
+    padding: 5px 3px;
+  }
+}
+
+.action-btn-container {
+  display: flex;
+  flex-flow: column wrap;
+
+  gap: 5px;
 }

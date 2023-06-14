@@ -8,7 +8,7 @@
   <tr *ngFor="let row of tableData">
     <td>{{ row.paymentIndex }}</td>
     <td>
-      <div *ngIf="row.edit">
+      <div class="edit-tea" *ngIf="row.edit">
         <input [(ngModel)]="newTea" type="number">
       </div>
       <div *ngIf="!row.edit">{{ row.tea }}%</div>
@@ -21,7 +21,7 @@
     <td>{{ row.amortization }}</td>
     <td>{{ row.finalBalance }}</td>
     <td>
-      <div *ngIf="row.edit">
+      <div class="action-btn-container" *ngIf="row.edit">
         <button (click)="onSave(row)">Guardar</button>
         <button (click)="row.edit = false">Cancelar</button>
       </div>
