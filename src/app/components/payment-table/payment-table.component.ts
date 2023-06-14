@@ -29,7 +29,13 @@ export class PaymentTableComponent {
     'Acción'
   ]
   newTea: number = 0
+  gracePeriodSelected: string = ''
   roundTo7Decimals: (num: (number | string)) => number
+  gracePeriods = [
+    'Sin',
+    'Parcial',
+    'Total'
+  ]
 
   constructor(private sharedService: SharedService, private financialService: FinancialService) {
     let periodicPayment: PeriodicPayment = this.convertLoanToPeriodicPayment(this.sharedService.loan)
@@ -59,7 +65,7 @@ export class PaymentTableComponent {
         finalBalance: finalBalance,
         tea: periodicPayment.tea,
         tep: periodicPayment.tep,
-        gracePeriod: 'No',
+        gracePeriod: 'Sin',
         interestAmount: interestAmount,
         periodicPayment: _periodicPayment,
         amortization: amortization,
@@ -101,6 +107,7 @@ export class PaymentTableComponent {
     let rowIndex = periodicPayment.paymentIndex - 1
 
     this.tableData[rowIndex].tea = this.newTea
+    this.tableData[rowIndex].gracePeriod = this.gracePeriodSelected
 
     this.updateTable()
 

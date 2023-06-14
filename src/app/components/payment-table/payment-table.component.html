@@ -14,7 +14,14 @@
       <div *ngIf="!row.edit">{{ row.tea }}%</div>
     </td>
     <td>{{ row.tep }}%</td>
-    <td>{{ row.gracePeriod }}</td>
+    <td>
+      <div *ngIf="row.edit">
+        <select [(ngModel)]="gracePeriodSelected">
+          <option *ngFor="let period of gracePeriods" [value]="period">{{ period }}</option>
+        </select>
+      </div>
+      <div *ngIf="!row.edit">{{ row.gracePeriod }}</div>
+    </td>
     <td>{{ row.initialBalance }}</td>
     <td>{{ row.interestAmount }}</td>
     <td>{{ row.periodicPayment }}</td>
