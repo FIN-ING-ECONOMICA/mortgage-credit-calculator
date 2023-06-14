@@ -39,9 +39,12 @@ export class LoanApplicationFormComponent {
   }
 
   submitForm() {
-    this.sharedService.loan = this.assignLoanValues();
-    console.log('Cálculo del préstamo:', this.sharedService.loan)
-    this.router.navigate(['/payment-summary'])
+    if (this.loanForm.valid) {
+      this.sharedService.loan = this.assignLoanValues();
+      this.router.navigate(['/payment-summary'])
+    } else {
+      console.log('Formulario Inválido')
+    }
   }
 
   assignLoanValues(): Loan {
@@ -59,7 +62,7 @@ export class LoanApplicationFormComponent {
   }
 
   convertTepTo7Decimals(tea: number, _paymentFrequency: number): number {
-    let tep = (this.financialService.teaToTep(tea, _paymentFrequency) * 100).toFixed(7)
+    let tep = this.financialService.teaToTep(tea, _paymentFrequency).toFixed(7)
     return Number(tep)
   }
 }
