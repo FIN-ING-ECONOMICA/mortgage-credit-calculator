@@ -118,6 +118,12 @@ export class PaymentTableComponent {
     let tableSize = this.tableData.length
     let currentPayment: PeriodicPayment = {} as PeriodicPayment
 
+    let tep: number
+    let interestAmount: number
+    let periodicPayment: number
+    let amortization: number
+    let finalBalance: number
+
     for (let i = 0; i < tableSize; i++) {
 
       currentPayment = this.tableData[i]
@@ -129,11 +135,18 @@ export class PaymentTableComponent {
         currentPayment.initialBalance = this.sharedService.loan.initialPayment
       }
 
-      let tep = this.roundTo7Decimals(this.financialService.teaToTep(currentPayment.tea, this.getPaymentFrequencyValue(currentPayment.paymentFrequency)))
-      let interestAmount = this.roundTo2Decimals(this.financialService.calculateInterestAmount(currentPayment.initialBalance, tep))
-      let periodicPayment = this.roundTo2Decimals(this.financialService.calculatePeriodicPayment(currentPayment.initialBalance, tep, currentPayment.periods, i + 1))
-      let amortization = this.roundTo2Decimals(this.financialService.calculateAmortization(periodicPayment, interestAmount))
-      let finalBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(currentPayment.initialBalance, amortization))
+      tep = this.roundTo7Decimals(this.financialService.teaToTep(currentPayment.tea, this.getPaymentFrequencyValue(currentPayment.paymentFrequency)))
+      interestAmount = this.roundTo2Decimals(this.financialService.calculateInterestAmount(currentPayment.initialBalance, tep))
+
+      if (currentPayment.gracePeriod === 'Parcial') {
+        periodicPayment = interestAmount
+        amortization = 0
+      } else {
+        periodicPayment = this.roundTo2Decimals(this.financialService.calculatePeriodicPayment(currentPayment.initialBalance, tep, currentPayment.periods, i + 1))
+        amortization = this.roundTo2Decimals(this.financialService.calculateAmortization(periodicPayment, interestAmount))
+      }
+
+      finalBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(currentPayment.initialBalance, amortization))
 
       this.tableData[i].initialBalance = currentPayment.initialBalance
       this.tableData[i].tep = tep
