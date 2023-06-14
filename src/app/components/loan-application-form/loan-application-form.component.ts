@@ -33,9 +33,11 @@ export class LoanApplicationFormComponent {
     Anual: 360
   }
   frequencies = Object.keys(this.paymentFrequency);
+  roundTo7Decimals: (num: (number | string)) => number
 
   constructor(private financialService: FinancialService, private sharedService: SharedService,
               private router: Router) {
+    this.roundTo7Decimals = this.sharedService.roundTo7Decimals
   }
 
   submitForm() {
@@ -53,16 +55,11 @@ export class LoanApplicationFormComponent {
       initialPaymentPercentage: Number(this.loanForm.value.initialPaymentPercentage) ?? 0,
       initialPayment: this.financialService.calculateLoan(Number(this.loanForm.value.initialPaymentPercentage) ?? 0, Number(this.loanForm.value.realStatePrice) ?? 0),
       tea: Number(this.loanForm.value.tea) ?? 0,
-      tep: this.convertTepTo7Decimals(Number(this.loanForm.value.tea) ?? 0, this.paymentFrequency[this.loanForm.value.paymentFrequency ?? '']),
+      tep: this.roundTo7Decimals(this.financialService.teaToTep(Number(this.loanForm.value.tea) ?? 0, this.paymentFrequency[this.loanForm.value.paymentFrequency ?? ''])),
       paymentFrequency: { [this.loanForm.value.paymentFrequency ?? '']: this.paymentFrequency[this.loanForm.value.paymentFrequency ?? ''] },
       years: Number(this.loanForm.value.years) ?? 0,
       periods: this.financialService.getPeriod(this.paymentFrequency[this.loanForm.value.paymentFrequency ?? ''], Number(this.loanForm.value.years) ?? 0)
     }
     return loan
-  }
-
-  convertTepTo7Decimals(tea: number, _paymentFrequency: number): number {
-    let tep = this.financialService.teaToTep(tea, _paymentFrequency).toFixed(7)
-    return Number(tep)
   }
 }
