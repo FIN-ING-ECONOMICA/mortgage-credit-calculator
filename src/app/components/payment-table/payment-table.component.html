@@ -9,7 +9,7 @@
     <td>{{ row.paymentIndex }}</td>
     <td>
       <div class="edit-tea" *ngIf="row.edit">
-        <input [(ngModel)]="newTea" type="number">
+        <input [(ngModel)]="newTea" type="number" (input)="onTeaInput($event)">
       </div>
       <div *ngIf="!row.edit">{{ row.tea }}%</div>
     </td>

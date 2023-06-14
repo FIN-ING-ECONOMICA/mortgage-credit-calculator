@@ -140,4 +140,12 @@ export class PaymentTableComponent {
     const frequency = keys[0]
     return paymentFrequency[frequency]
   }
+
+  onTeaInput(event: any) {
+    const inputValue = event.target.value.trim()
+
+    if (inputValue.includes('-')) {
+      event.target.value = inputValue.slice(1);
+    }
+  }
 }
