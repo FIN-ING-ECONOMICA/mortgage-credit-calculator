@@ -4,7 +4,7 @@ import { PeriodicPayment } from "../../models/periodic-payment";
 import { SharedService } from "../../services/shared.service";
 import { Loan } from "../../models/loan";
 import { FinancialService } from "../../services/financial.service";
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @Component({
   selector: 'app-payment-table',
@@ -97,7 +97,47 @@ export class PaymentTableComponent {
 
   onSave(periodicPayment: PeriodicPayment) {
     let rowIndex = periodicPayment.paymentIndex - 1
-    console.log('Index:', rowIndex)
-    console.log('TEA:', this.newTea)
+
+    this.tableData[rowIndex].tea = this.newTea
+
+    this.updateTable()
+
+    periodicPayment.edit = !periodicPayment.edit;
+  }
+
+  updateTable(): void {
+    let tableSize = this.tableData.length
+    let currentPayment: PeriodicPayment = {} as PeriodicPayment
+
+    for (let i = 0; i < tableSize; i++) {
+
+      currentPayment = this.tableData[i]
+
+      // calculate initial balance
+      if (i > 0) {
+        currentPayment.initialBalance = this.tableData[i - 1].finalBalance
+      } else {
+        currentPayment.initialBalance = this.sharedService.loan.initialPayment
+      }
+
+      let tep = this.financialService.teaToTep(currentPayment.tea, this.getPaymentFrequencyValue(currentPayment.paymentFrequency))
+      let interestAmount = this.roundTo2Decimals(this.financialService.calculateInterestAmount(currentPayment.initialBalance, tep))
+      let periodicPayment = this.roundTo2Decimals(this.financialService.calculatePeriodicPayment(currentPayment.initialBalance, tep, currentPayment.periods, i + 1))
+      let amortization = this.roundTo2Decimals(this.financialService.calculateAmortization(periodicPayment, interestAmount))
+      let finalBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(currentPayment.initialBalance, amortization))
+
+      this.tableData[i].initialBalance = currentPayment.initialBalance
+      this.tableData[i].tep = tep
+      this.tableData[i].interestAmount = interestAmount
+      this.tableData[i].periodicPayment = periodicPayment
+      this.tableData[i].amortization = amortization
+      this.tableData[i].finalBalance = finalBalance
+    }
+  }
+
+  getPaymentFrequencyValue(paymentFrequency: any): number {
+    const keys = Object.keys(paymentFrequency)
+    const frequency = keys[0]
+    return paymentFrequency[frequency]
   }
 }
