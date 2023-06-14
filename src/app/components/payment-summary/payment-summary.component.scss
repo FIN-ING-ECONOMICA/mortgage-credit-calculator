@@ -1,5 +1,16 @@
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+
+  padding: 5% 2%;
+}
+
 .loan-table {
   border-collapse: collapse;
+
+  font-size: 13px;
 
   td {
     padding: 8px;
