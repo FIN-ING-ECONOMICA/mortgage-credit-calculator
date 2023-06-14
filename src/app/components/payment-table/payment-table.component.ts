@@ -141,12 +141,16 @@ export class PaymentTableComponent {
       if (currentPayment.gracePeriod === 'Parcial') {
         periodicPayment = interestAmount
         amortization = 0
+        finalBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(currentPayment.initialBalance, amortization))
+      } else if (currentPayment.gracePeriod === 'Total') {
+        periodicPayment = 0
+        amortization = 0
+        finalBalance = currentPayment.initialBalance + interestAmount
       } else {
         periodicPayment = this.roundTo2Decimals(this.financialService.calculatePeriodicPayment(currentPayment.initialBalance, tep, currentPayment.periods, i + 1))
         amortization = this.roundTo2Decimals(this.financialService.calculateAmortization(periodicPayment, interestAmount))
+        finalBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(currentPayment.initialBalance, amortization))
       }
-
-      finalBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(currentPayment.initialBalance, amortization))
 
       this.tableData[i].initialBalance = currentPayment.initialBalance
       this.tableData[i].tep = tep
