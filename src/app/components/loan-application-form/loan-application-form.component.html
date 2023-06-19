@@ -65,6 +65,20 @@
         </select>
       </div>
 
+      <div>
+        <div>Porte</div>
+        <input type="number" min="0" placeholder="Precio del porte" [formControlName]="'mortgageTransfer'">
+      </div>
+
+      <div>
+        <div>Gastos administrativos</div>
+        <input type="number" min="0" [formControlName]="'administrativeExpenses'">
+      </div>
+
+      <div>
+        <div>Seguro de desgravamen</div>
+        <input type="number" min="0" [formControlName]="'mortgageLifeInsurance'">
+      </div>
     </div>
   </section>
 
