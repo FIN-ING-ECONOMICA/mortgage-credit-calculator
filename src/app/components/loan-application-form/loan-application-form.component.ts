@@ -20,7 +20,11 @@ export class LoanApplicationFormComponent {
     initialPaymentPercentage: new FormControl('', [Validators.required, Validators.min(0)]),
     tea: new FormControl('', [Validators.required, Validators.min(0)]),
     paymentFrequency: new FormControl('',[Validators.required]),
-    years: new FormControl('', [Validators.required, Validators.min(0)])
+    years: new FormControl('', [Validators.required, Validators.min(0)]),
+    currency: new FormControl(''),
+    mortgageTransfer: new FormControl(''),
+    administrativeExpenses: new FormControl(''),
+    mortgageLifeInsurance: new FormControl('')
   })
   paymentFrequency: Record<string, number> = {
     Diario: 1,
