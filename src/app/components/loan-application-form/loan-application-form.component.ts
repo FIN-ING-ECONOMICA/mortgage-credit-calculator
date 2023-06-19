@@ -38,6 +38,7 @@ export class LoanApplicationFormComponent {
   }
   frequencies = Object.keys(this.paymentFrequency);
   roundTo7Decimals: (num: (number | string)) => number
+  currencies: string[] = ['Soles', 'Dólares']
 
   constructor(private financialService: FinancialService, private sharedService: SharedService,
               private router: Router) {

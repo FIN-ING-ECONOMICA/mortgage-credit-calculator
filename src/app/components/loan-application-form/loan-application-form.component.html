@@ -55,6 +55,17 @@
         </div>
       </div>
     </div>
+
+    <div class="col">
+      <div>
+        <div>Divisa</div>
+        <select [formControlName]="'currency'">
+          <option disabled selected value="">Elija la moneda</option>
+          <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
+        </select>
+      </div>
+
+    </div>
   </section>
 
   <div class="calc-button">
