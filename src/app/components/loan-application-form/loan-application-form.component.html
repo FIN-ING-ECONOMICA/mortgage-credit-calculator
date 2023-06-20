@@ -14,12 +14,12 @@
       </div>
 
       <div>
-        <div>Porcentaje de la cuota inicial (debe ser mayor o igual a 7.5%)</div>
-        <input type="number" placeholder="Porcentaje de la cuota inicial" [formControlName]="'initialPaymentPercentage'">
+        <div>Cuota inicial (debe ser mayor o igual a 7.5%)</div>
+        <input type="number" placeholder="Porcentaje de la cuota inicial%" [formControlName]="'initialPaymentPercentage'">
 
         <div class="errors" *ngIf="loanForm.get('initialPaymentPercentage')?.invalid && loanForm.get('initialPaymentPercentage')?.touched">
           <div *ngIf="loanForm.get('initialPaymentPercentage')?.errors?.['required']">Campo requerido</div>
-          <div *ngIf="loanForm.get('initialPaymentPercentage')?.errors?.['min']">El porcentaje no puede ser negativo</div>
+          <div *ngIf="loanForm.get('initialPaymentPercentage')?.errors?.['min']">El porcentaje no puede ser menor a 7.5% ni negativo</div>
         </div>
       </div>
 
@@ -63,21 +63,40 @@
           <option disabled selected value="">Elija la moneda</option>
           <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
         </select>
+
+        <div class="errors" *ngIf="loanForm.get('currency')?.invalid && loanForm.get('currency')?.touched">
+          <div *ngIf="loanForm.get('currency')?.errors?.['required']">Por favor, seleccione una opción</div>
+        </div>
       </div>
 
       <div>
         <div>Porte</div>
         <input type="number" min="0" placeholder="Precio del porte" [formControlName]="'mortgageTransfer'">
+
+        <div class="errors" *ngIf="loanForm.get('mortgageTransfer')?.invalid && loanForm.get('mortgageTransfer')?.touched">
+          <div *ngIf="loanForm.get('mortgageTransfer')?.errors?.['required']">Campo requerido</div>
+          <div *ngIf="loanForm.get('mortgageTransfer')?.errors?.['min']">El porte no puede ser negativo</div>
+        </div>
       </div>
 
       <div>
         <div>Gastos administrativos</div>
-        <input type="number" min="0" [formControlName]="'administrativeExpenses'">
+        <input type="number" min="0" placeholder="Gastos administrativos" [formControlName]="'administrativeExpenses'">
+
+        <div class="errors" *ngIf="loanForm.get('administrativeExpenses')?.invalid && loanForm.get('administrativeExpenses')?.touched">
+          <div *ngIf="loanForm.get('administrativeExpenses')?.errors?.['required']">Campo requerido</div>
+          <div *ngIf="loanForm.get('administrativeExpenses')?.errors?.['min']">Los gastos administrativos no pueden ser negativos</div>
+        </div>
       </div>
 
       <div>
         <div>Seguro de desgravamen</div>
-        <input type="number" min="0" [formControlName]="'mortgageLifeInsurance'">
+        <input type="number" min="0" placeholder="Porcentaje del desgravamen%" [formControlName]="'mortgageLifeInsurance'">
+
+        <div class="errors" *ngIf="loanForm.get('mortgageLifeInsurance')?.invalid && loanForm.get('mortgageLifeInsurance')?.touched">
+          <div *ngIf="loanForm.get('mortgageLifeInsurance')?.errors?.['required']">Campo requerido</div>
+          <div *ngIf="loanForm.get('mortgageLifeInsurance')?.errors?.['min']">El seguro de desgravamen no puede ser negativo</div>
+        </div>
       </div>
     </div>
   </section>

@@ -17,14 +17,14 @@ export class LoanApplicationFormComponent {
 
   loanForm   = new FormGroup({
     realStatePrice: new FormControl('', [Validators.required, Validators.min(0)]),
-    initialPaymentPercentage: new FormControl('', [Validators.required, Validators.min(0)]),
+    initialPaymentPercentage: new FormControl('', [Validators.required, Validators.min(7.5)]),
     tea: new FormControl('', [Validators.required, Validators.min(0)]),
     paymentFrequency: new FormControl('',[Validators.required]),
     years: new FormControl('', [Validators.required, Validators.min(0)]),
-    currency: new FormControl(''),
-    mortgageTransfer: new FormControl(''),
-    administrativeExpenses: new FormControl(''),
-    mortgageLifeInsurance: new FormControl('')
+    currency: new FormControl('', [Validators.required]),
+    mortgageTransfer: new FormControl('', [Validators.required, Validators.min(0)]),
+    administrativeExpenses: new FormControl('', [Validators.required, Validators.min(0)]),
+    mortgageLifeInsurance: new FormControl('', [Validators.required, Validators.min(0)])
   })
   paymentFrequency: Record<string, number> = {
     Diario: 1,
