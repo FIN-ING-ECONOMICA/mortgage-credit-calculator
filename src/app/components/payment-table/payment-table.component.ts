@@ -41,8 +41,10 @@ export class PaymentTableComponent {
     'Parcial',
     'Total'
   ]
+  currency: string = ''
 
   constructor(private sharedService: SharedService, private financialService: FinancialService) {
+    this.currency = this.financialService.getCurrency(this.sharedService.loan)
     let periodicPayment: PeriodicPayment = this.convertLoanToPeriodicPayment(this.sharedService.loan)
     this.tableData = this.calculateTableData(periodicPayment)
     this.roundTo7Decimals = this.sharedService.roundTo7Decimals

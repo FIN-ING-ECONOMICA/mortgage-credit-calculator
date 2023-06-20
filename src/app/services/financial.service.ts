@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Loan } from "../models/loan";
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +54,13 @@ export class FinancialService {
       additionalExpensesSum = additionalExpenses.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
     }
     return periodicPayment + additionalExpensesSum;
+  }
+
+  getCurrency(loan: Loan): string {
+    if (loan.currency === 'Soles') {
+      return 'S/'
+    } else {
+      return '$'
+    }
   }
 }
