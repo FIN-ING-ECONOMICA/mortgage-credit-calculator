@@ -46,4 +46,12 @@ export class FinancialService {
   calculateFinalBalance(initialBalance: number, amortization: number): number {
     return initialBalance - amortization;
   }
+
+  calculateCashFlow(periodicPayment: number, additionalExpenses?: number[]): number {
+    let additionalExpensesSum = 0
+    if (additionalExpenses) {
+      additionalExpensesSum = additionalExpenses.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    }
+    return periodicPayment + additionalExpensesSum;
+  }
 }
