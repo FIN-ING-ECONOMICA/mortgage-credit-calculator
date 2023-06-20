@@ -6,5 +6,9 @@ export interface Loan {
   tep: number,
   paymentFrequency: { [key: string]: number },
   years: number,
-  periods: number
+  periods: number,
+  currency: string,
+  mortgageTransfer: number,
+  administrativeExpenses: number,
+  mortgageLifeInsurance: number
 }
