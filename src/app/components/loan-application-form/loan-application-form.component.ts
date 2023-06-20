@@ -63,7 +63,11 @@ export class LoanApplicationFormComponent {
       tep: this.roundTo7Decimals(this.financialService.teaToTep(Number(this.loanForm.value.tea) ?? 0, this.paymentFrequency[this.loanForm.value.paymentFrequency ?? ''])),
       paymentFrequency: { [this.loanForm.value.paymentFrequency ?? '']: this.paymentFrequency[this.loanForm.value.paymentFrequency ?? ''] },
       years: Number(this.loanForm.value.years) ?? 0,
-      periods: this.financialService.getPeriod(this.paymentFrequency[this.loanForm.value.paymentFrequency ?? ''], Number(this.loanForm.value.years) ?? 0)
+      periods: this.financialService.getPeriod(this.paymentFrequency[this.loanForm.value.paymentFrequency ?? ''], Number(this.loanForm.value.years) ?? 0),
+      currency: this.loanForm.value.currency ?? '',
+      mortgageTransfer: Number(this.loanForm.value.mortgageTransfer ?? 0),
+      administrativeExpenses: Number(this.loanForm.value.administrativeExpenses ?? 0),
+      mortgageLifeInsurance: Number(this.loanForm.value.mortgageLifeInsurance ?? 0),
     }
     return loan
   }

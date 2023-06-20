@@ -14,7 +14,11 @@ export class SharedService {
     tep: 0,
     paymentFrequency: { ['']: 0 },
     years: 0,
-    periods: 0
+    periods: 0,
+    currency: '',
+    mortgageTransfer: 0,
+    administrativeExpenses: 0,
+    mortgageLifeInsurance: 0
   }
 
   constructor() { }
