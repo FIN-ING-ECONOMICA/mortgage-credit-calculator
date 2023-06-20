@@ -25,8 +25,12 @@
     <td>{{ row.initialBalance }}</td>
     <td>{{ row.interestAmount }}</td>
     <td>{{ row.periodicPayment }}</td>
+    <td>{{ row.mortgageTransfer }}</td>
+    <td>{{ row.administrativeExpenses }}</td>
+    <td>{{ row.mortgageLifeInsurance }} %</td>
     <td>{{ row.amortization }}</td>
     <td>{{ row.finalBalance }}</td>
+    <td>{{ row.cashFlow }}</td>
     <td>
       <div class="action-btn-container" *ngIf="row.edit">
         <button (click)="onSave(row)">Guardar</button>

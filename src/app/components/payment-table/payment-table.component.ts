@@ -24,8 +24,13 @@ export class PaymentTableComponent {
     'Saldo Inicial',
     'Interés',
     'Cuota',
+    'Porte',
+    'Gastos Administrativos',
+    'Seguro de desgravamen',
+    //'Desgravamen del periodo',
     'Amortización',
     'Saldo Final',
+    'Flujo',
     'Acción'
   ]
   newTea: number = 0
@@ -58,6 +63,7 @@ export class PaymentTableComponent {
       let _periodicPayment = this.roundTo2Decimals(this.financialService.calculatePeriodicPayment(initialBalance, periodicPayment.tep, periodicPayment.periods, i + 1))
       let amortization = this.roundTo2Decimals(this.financialService.calculateAmortization(_periodicPayment, interestAmount))
       let finalBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(initialBalance, amortization))
+      let cashFlow = this.roundTo2Decimals(this.financialService.calculateCashFlow(_periodicPayment, [periodicPayment.mortgageTransfer, periodicPayment.administrativeExpenses]))
 
       _tableData.push({
         paymentIndex: i + 1,
@@ -68,9 +74,13 @@ export class PaymentTableComponent {
         gracePeriod: 'Sin',
         interestAmount: interestAmount,
         periodicPayment: _periodicPayment,
+        mortgageTransfer: periodicPayment.mortgageTransfer,
+        administrativeExpenses: periodicPayment.administrativeExpenses,
+        mortgageLifeInsurance: periodicPayment.mortgageLifeInsurance,
         amortization: amortization,
         paymentFrequency: periodicPayment.paymentFrequency,
         periods: periodicPayment.periods,
+        cashFlow: cashFlow,
         edit: false
       })
     }
@@ -87,9 +97,13 @@ export class PaymentTableComponent {
       gracePeriod: 'No',
       interestAmount: 0,
       periodicPayment: 0,
+      mortgageTransfer: loan.mortgageTransfer,
+      administrativeExpenses: loan.administrativeExpenses,
+      mortgageLifeInsurance: loan.mortgageLifeInsurance,
       amortization: 0,
       paymentFrequency: loan.paymentFrequency,
       periods: loan.periods,
+      cashFlow: 0,
       edit: false
     }
     return periodicPayment
