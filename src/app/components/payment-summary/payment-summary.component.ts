@@ -26,7 +26,8 @@ export class PaymentSummaryComponent {
       'Préstamo': 'S/' + this.sharedService.loan.initialPayment,
       'Frecuencia': this.getFrequencyKey(this.sharedService.loan.paymentFrequency),
       'Cantidad de años': this.sharedService.loan.years,
-      'Cantidad de periodos': this.sharedService.loan.periods
+      'Cantidad de periodos': this.sharedService.loan.periods,
+      'Divisa': this.sharedService.loan.currency
     }
   }
 
