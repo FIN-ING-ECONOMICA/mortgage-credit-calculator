@@ -10,5 +10,6 @@ export interface Loan {
   currency: string,
   mortgageTransfer: number,
   administrativeExpenses: number,
-  mortgageLifeInsurance: number
+  mortgageLifeInsurance: number,
+  allRiskInsurance: number
 }

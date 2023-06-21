@@ -18,7 +18,8 @@ export class SharedService {
     currency: '',
     mortgageTransfer: 0,
     administrativeExpenses: 0,
-    mortgageLifeInsurance: 0
+    mortgageLifeInsurance: 0,
+    allRiskInsurance: 0
   }
 
   constructor() { }

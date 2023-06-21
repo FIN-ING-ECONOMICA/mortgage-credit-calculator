@@ -98,6 +98,16 @@
           <div *ngIf="loanForm.get('mortgageLifeInsurance')?.errors?.['min']">El seguro de desgravamen no puede ser negativo</div>
         </div>
       </div>
+
+      <div>
+        <div>Seguro contra todo riesgo</div>
+        <input type="number" min="0" placeholder="Porcentaje del seguro%" [formControlName]="'allRiskInsurance'">
+
+        <div class="errors" *ngIf="loanForm.get('allRiskInsurance')?.invalid && loanForm.get('allRiskInsurance')?.touched">
+          <div *ngIf="loanForm.get('allRiskInsurance')?.errors?.['required']">Campo requerido</div>
+          <div *ngIf="loanForm.get('allRiskInsurance')?.errors?.['min']">El seguro contra todo riesgo no puede ser negativo</div>
+        </div>
+      </div>
     </div>
   </section>
 

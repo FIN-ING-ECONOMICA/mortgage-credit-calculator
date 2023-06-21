@@ -24,7 +24,8 @@ export class LoanApplicationFormComponent {
     currency: new FormControl('', [Validators.required]),
     mortgageTransfer: new FormControl('', [Validators.required, Validators.min(0)]),
     administrativeExpenses: new FormControl('', [Validators.required, Validators.min(0)]),
-    mortgageLifeInsurance: new FormControl('', [Validators.required, Validators.min(0)])
+    mortgageLifeInsurance: new FormControl('', [Validators.required, Validators.min(0)]),
+    allRiskInsurance: new FormControl('', [Validators.required, Validators.min(0)])
   })
   paymentFrequency: Record<string, number> = {
     Diario: 1,
@@ -68,6 +69,7 @@ export class LoanApplicationFormComponent {
       mortgageTransfer: Number(this.loanForm.value.mortgageTransfer ?? 0),
       administrativeExpenses: Number(this.loanForm.value.administrativeExpenses ?? 0),
       mortgageLifeInsurance: Number(this.loanForm.value.mortgageLifeInsurance ?? 0),
+      allRiskInsurance: Number(this.loanForm.value.allRiskInsurance ?? 0)
     }
     return loan
   }
