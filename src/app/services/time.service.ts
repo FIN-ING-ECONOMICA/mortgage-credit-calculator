@@ -39,7 +39,6 @@ export class TimeService {
       months = this.paymentFrequency[frequency]
       unitOfTime = 'days';
     } else {
-      unitOfTime = 'months'
       months = this.convertDaysToMonths(this.paymentFrequency[frequency])
     }
 
@@ -48,5 +47,16 @@ export class TimeService {
     }
 
     return paymentDates;
+  }
+
+  getDays(paymentDates: Moment[]): number[] {
+    let days: number[] = [];
+    let arraySize = paymentDates.length;
+
+    for (let i: number = 1; i < arraySize; i++) {
+      days.push(this.calculateDateDifference(paymentDates[i - 1], paymentDates[i]))
+    }
+
+    return days;
   }
 }
