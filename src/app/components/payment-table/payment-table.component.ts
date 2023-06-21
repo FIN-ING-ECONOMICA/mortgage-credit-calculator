@@ -63,6 +63,7 @@ export class PaymentTableComponent {
       let initialBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(periodicPayment.initialBalance, periodicPayment.amortization))
       let interestAmount = this.roundTo2Decimals(this.financialService.calculateInterestAmount(initialBalance, periodicPayment.tep))
       let _periodicPayment = this.roundTo2Decimals(this.financialService.calculatePeriodicPayment(initialBalance, periodicPayment.tep, periodicPayment.periods, i + 1))
+      let mortgageLifeInsurance = this.roundTo2Decimals(this.financialService.calculateMortgageLifeInsurance(initialBalance, periodicPayment.mortgageLifeInsurance))
       let amortization = this.roundTo2Decimals(this.financialService.calculateAmortization(_periodicPayment, interestAmount))
       let finalBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(initialBalance, amortization))
       let cashFlow = this.roundTo2Decimals(this.financialService.calculateCashFlow(_periodicPayment, [periodicPayment.mortgageTransfer, periodicPayment.administrativeExpenses]))
@@ -78,7 +79,7 @@ export class PaymentTableComponent {
         periodicPayment: _periodicPayment,
         mortgageTransfer: periodicPayment.mortgageTransfer,
         administrativeExpenses: periodicPayment.administrativeExpenses,
-        mortgageLifeInsurance: periodicPayment.mortgageLifeInsurance,
+        mortgageLifeInsurance: mortgageLifeInsurance,
         allRiskInsurance: periodicPayment.allRiskInsurance,
         amortization: amortization,
         paymentFrequency: periodicPayment.paymentFrequency,

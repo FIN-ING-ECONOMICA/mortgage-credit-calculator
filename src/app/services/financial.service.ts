@@ -63,4 +63,9 @@ export class FinancialService {
       return '$'
     }
   }
+
+  // calcular seguro de desgravamen
+  calculateMortgageLifeInsurance(initialBalance: number, mortgageLifeInsurance: number): number {
+    return initialBalance * (mortgageLifeInsurance / 100)
+  }
 }
