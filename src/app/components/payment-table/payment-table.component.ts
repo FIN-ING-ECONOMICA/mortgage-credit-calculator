@@ -58,6 +58,9 @@ export class PaymentTableComponent {
 
     let teps = this.adjustTepToPeriod(periodicPayment)
 
+    // the periodic payment (cuota) is constant throughout all periods
+    let _periodicPayment = this.financialService.calculatePeriodicPayment(periodicPayment.initialBalance, periodicPayment.tep, periodicPayment.periods, 1)
+
     for (let i = 0; i < arraySize; i++) {
 
       if (i > 0) {
@@ -66,7 +69,6 @@ export class PaymentTableComponent {
 
       let initialBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(periodicPayment.initialBalance, periodicPayment.amortization))
       let interestAmount = this.roundTo2Decimals(this.financialService.calculateInterestAmount(initialBalance, teps[i]))
-      let _periodicPayment = this.roundTo2Decimals(this.financialService.calculatePeriodicPayment(initialBalance, periodicPayment.tep, periodicPayment.periods, i + 1))
       let mortgageLifeInsurance = this.roundTo2Decimals(this.financialService.calculateMortgageLifeInsurance(initialBalance, periodicPayment.mortgageLifeInsurance))
       let amortization = this.roundTo2Decimals(this.financialService.calculateAmortization(_periodicPayment, interestAmount))
       let finalBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(initialBalance, amortization))
