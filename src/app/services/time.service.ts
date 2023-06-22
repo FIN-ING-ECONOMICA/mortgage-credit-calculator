@@ -36,10 +36,10 @@ export class TimeService {
     if (frequency === 'Diario') {
       unitOfTime = 'days';
     } else if (frequency === 'Quincenal') {
-      months = this.paymentFrequency[frequency]
+      months = this.getFrequencyValue(frequency)
       unitOfTime = 'days';
     } else {
-      months = this.convertDaysToMonths(this.paymentFrequency[frequency])
+      months = this.convertDaysToMonths(this.getFrequencyValue(frequency))
     }
 
     for (let i: number = 0; i <= periods; i++) {
