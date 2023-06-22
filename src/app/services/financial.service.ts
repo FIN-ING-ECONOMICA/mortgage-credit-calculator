@@ -24,6 +24,10 @@ export class FinancialService {
     return tep
   }
 
+  adjustTepTo365Days(tep: number, paymentFrequency: number): number {
+    return (tep * 365) / paymentFrequency
+  }
+
   getPeriod(paymentFrequency: number, years: number): number {
     return (360 / paymentFrequency) * years
   }
