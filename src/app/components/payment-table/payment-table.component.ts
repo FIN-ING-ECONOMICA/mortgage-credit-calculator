@@ -27,10 +27,9 @@ export class PaymentTableComponent {
     'Saldo Inicial',
     'Interés',
     'Cuota',
-    'Porte',
-    'Gastos Administrativos',
-    'Seguro de desgravamen',
-    'Seguro contra todo riesgo',
+    'Costos',
+    'Seguro Desgravamen',
+    'Seguro Riesgo',
     'Amortización',
     'Saldo Final',
     'Flujo',
@@ -71,7 +70,7 @@ export class PaymentTableComponent {
       let mortgageLifeInsurance = this.roundTo2Decimals(this.financialService.calculateMortgageLifeInsurance(initialBalance, periodicPayment.mortgageLifeInsurance))
       let amortization = this.roundTo2Decimals(this.financialService.calculateAmortization(_periodicPayment, interestAmount))
       let finalBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(initialBalance, amortization))
-      let cashFlow = this.roundTo2Decimals(this.financialService.calculateCashFlow(_periodicPayment, [periodicPayment.mortgageTransfer, periodicPayment.administrativeExpenses]))
+      let cashFlow = this.roundTo2Decimals(this.financialService.calculateCashFlow(_periodicPayment, [periodicPayment.costs]))
 
       _tableData.push({
         paymentIndex: i + 1,
@@ -82,8 +81,7 @@ export class PaymentTableComponent {
         gracePeriod: 'Sin',
         interestAmount: interestAmount,
         periodicPayment: _periodicPayment,
-        mortgageTransfer: periodicPayment.mortgageTransfer,
-        administrativeExpenses: periodicPayment.administrativeExpenses,
+        costs: periodicPayment.costs,
         mortgageLifeInsurance: mortgageLifeInsurance,
         allRiskInsurance: periodicPayment.allRiskInsurance,
         amortization: amortization,
@@ -106,8 +104,7 @@ export class PaymentTableComponent {
       gracePeriod: 'No',
       interestAmount: 0,
       periodicPayment: 0,
-      mortgageTransfer: loan.mortgageTransfer,
-      administrativeExpenses: loan.administrativeExpenses,
+      costs: loan.mortgageTransfer + loan.administrativeExpenses,
       mortgageLifeInsurance: loan.mortgageLifeInsurance,
       allRiskInsurance: loan.allRiskInsurance,
       amortization: 0,
