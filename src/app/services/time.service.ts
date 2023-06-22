@@ -5,7 +5,7 @@ import { DurationInputArg2, Moment} from "moment";
   providedIn: 'root'
 })
 export class TimeService {
-  paymentFrequency: Record<string, number> = {
+  private paymentFrequency: Record<string, number> = {
     Diario: 1,
     Quincenal: 15,
     Mensual: 30,
@@ -58,5 +58,13 @@ export class TimeService {
     }
 
     return days;
+  }
+
+  getFrequencyValue(frequency: string): number {
+    return this.paymentFrequency[frequency]
+  }
+
+  getFrequencies(): string[] {
+    return Object.keys(this.paymentFrequency)
   }
 }

@@ -5,6 +5,7 @@ import { SharedService } from "../../services/shared.service";
 import { Loan } from "../../models/loan";
 import { FinancialService } from "../../services/financial.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { TimeService } from "../../services/time.service";
 
 @Component({
   selector: 'app-payment-table',
@@ -43,7 +44,7 @@ export class PaymentTableComponent {
   ]
   currency: string = ''
 
-  constructor(private sharedService: SharedService, private financialService: FinancialService) {
+  constructor(private sharedService: SharedService, private financialService: FinancialService, private timeService: TimeService) {
     this.currency = this.financialService.getCurrency(this.sharedService.loan)
     let periodicPayment: PeriodicPayment = this.convertLoanToPeriodicPayment(this.sharedService.loan)
     this.tableData = this.calculateTableData(periodicPayment)
@@ -154,7 +155,7 @@ export class PaymentTableComponent {
         currentPayment.initialBalance = this.sharedService.loan.initialPayment
       }
 
-      tep = this.roundTo7Decimals(this.financialService.teaToTep(currentPayment.tea, this.getPaymentFrequencyValue(currentPayment.paymentFrequency)))
+      tep = this.roundTo7Decimals(this.financialService.teaToTep(currentPayment.tea, this.timeService.getFrequencyValue(currentPayment.paymentFrequency)))
       interestAmount = this.roundTo2Decimals(this.financialService.calculateInterestAmount(currentPayment.initialBalance, tep))
 
       if (currentPayment.gracePeriod === 'Parcial') {
@@ -178,12 +179,6 @@ export class PaymentTableComponent {
       this.tableData[i].amortization = amortization
       this.tableData[i].finalBalance = finalBalance
     }
-  }
-
-  getPaymentFrequencyValue(paymentFrequency: any): number {
-    const keys = Object.keys(paymentFrequency)
-    const frequency = keys[0]
-    return paymentFrequency[frequency]
   }
 
   onTeaInput(event: any) {

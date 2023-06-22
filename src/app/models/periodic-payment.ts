@@ -13,7 +13,7 @@ export interface PeriodicPayment {
   mortgageLifeInsurance: number,
   allRiskInsurance: number,
   amortization: number,
-  paymentFrequency: { [key: string]: number },
+  paymentFrequency: string,
   periods: number,
   cashFlow: number,
   edit: boolean

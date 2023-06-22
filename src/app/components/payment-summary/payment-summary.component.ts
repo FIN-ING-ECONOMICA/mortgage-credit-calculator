@@ -27,14 +27,10 @@ export class PaymentSummaryComponent {
       'Precio de Venta': this.currency + ' ' + this.sharedService.loan.realStatePrice,
       '% Cuota Inicial': this.sharedService.loan.initialPaymentPercentage + '%',
       'Préstamo': this.currency + ' '  + this.sharedService.loan.initialPayment,
-      'Frecuencia': this.getFrequencyKey(this.sharedService.loan.paymentFrequency),
+      'Frecuencia': this.sharedService.loan.paymentFrequency,
       'Cantidad de años': this.sharedService.loan.years,
       'Cantidad de periodos': this.sharedService.loan.periods,
       'Divisa': this.sharedService.loan.currency
     }
-  }
-
-  getFrequencyKey(frequency: object) {
-    return Object.keys(frequency)[0]
   }
 }

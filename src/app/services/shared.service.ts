@@ -12,7 +12,7 @@ export class SharedService {
     initialPayment: 0,
     tea: 0,
     tep: 0,
-    paymentFrequency: { ['']: 0 },
+    paymentFrequency: '',
     years: 0,
     periods: 0,
     currency: '',

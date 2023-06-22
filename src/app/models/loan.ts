@@ -4,7 +4,7 @@ export interface Loan {
   initialPayment: number,
   tea: number,
   tep: number,
-  paymentFrequency: { [key: string]: number },
+  paymentFrequency: string,
   years: number,
   periods: number,
   currency: string,
