@@ -44,20 +44,17 @@ export class FinancialService {
     return r
   }
 
-  calculateAmortization(periodicPayment: number, interestAmount: number): number {
-    return periodicPayment - interestAmount
+  calculateAmortization(periodicPayment: number, interestAmount: number, additionalCosts: number[]): number {
+    let additionalCostsSum = additionalCosts.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    return periodicPayment - interestAmount - additionalCostsSum
   }
 
   calculateFinalBalance(initialBalance: number, amortization: number): number {
     return initialBalance - amortization;
   }
 
-  calculateCashFlow(periodicPayment: number, additionalExpenses?: number[]): number {
-    let additionalExpensesSum = 0
-    if (additionalExpenses) {
-      additionalExpensesSum = additionalExpenses.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-    }
-    return periodicPayment + additionalExpensesSum;
+  calculateCashFlow(periodicPayment: number): number {
+    return periodicPayment;
   }
 
   getCurrency(loan: Loan): string {
@@ -71,5 +68,9 @@ export class FinancialService {
   // calcular seguro de desgravamen
   calculateMortgageLifeInsurance(initialBalance: number, mortgageLifeInsurance: number): number {
     return initialBalance * (mortgageLifeInsurance / 100)
+  }
+
+  calculateAllRiskInsurance(initialBalance: number, allRiskInsurance: number) {
+    return initialBalance * (allRiskInsurance / 100)
   }
 }
