@@ -44,8 +44,10 @@ export class PaymentTableComponent {
     'Total'
   ]
   currency: string = ''
+  loan: Loan = {} as Loan
 
   constructor(private sharedService: SharedService, private financialService: FinancialService, private timeService: TimeService) {
+    this.loan = this.sharedService.loan
     this.currency = this.financialService.getCurrency(this.sharedService.loan)
     this.roundToNDecimals = this.sharedService.roundToNDecimals
     let periodicPayment: PeriodicPayment = this.convertLoanToPeriodicPayment(this.sharedService.loan)
@@ -55,7 +57,6 @@ export class PaymentTableComponent {
   calculateTableData(periodicPayment: PeriodicPayment): Array<PeriodicPayment> {
     let arraySize = periodicPayment.periods;
     let _tableData: Array<PeriodicPayment> = []
-
     let teps = this.adjustTepToPeriod(periodicPayment)
 
     // the periodic payment (cuota) is constant throughout all periods
@@ -73,11 +74,7 @@ export class PaymentTableComponent {
       let interestAmount = this.financialService.calculateInterestAmount(initialBalance, teps[i])
       let mortgageLifeInsurance = this.financialService.calculateMortgageLifeInsurance(initialBalance, mortgageLifeInsurancePercentage)
       let allRiskInsurance = this.financialService.calculateAllRiskInsurance(initialBalance, allRiskInsurancePercentage)
-
       let amortization = this.financialService.calculateAmortization(_periodicPayment, interestAmount, [periodicPayment.costs, mortgageLifeInsurance, allRiskInsurance])
-
-      console.log(`Cuota: ${_periodicPayment}\nIntereses: ${interestAmount}\nCostos: ${periodicPayment.costs}\nDesgravamen: ${periodicPayment.mortgageLifeInsurance}\nSeguro de riesgo: ${periodicPayment.allRiskInsurance}`)
-
       let finalBalance = this.financialService.calculateFinalBalance(initialBalance, amortization)
       let cashFlow = this.financialService.calculateCashFlow(_periodicPayment)
 
@@ -99,6 +96,10 @@ export class PaymentTableComponent {
         cashFlow: cashFlow,
         edit: false
       })
+
+      if (i == arraySize - 1) {
+        let newPeriodicPayment = this.calculateNewPeriodicPayment(periodicPayment, finalBalance)
+      }
     }
     return _tableData
   }
@@ -127,18 +128,27 @@ export class PaymentTableComponent {
 
   adjustTepToPeriod(periodicPayment: PeriodicPayment) {
     let tep365: number = this.financialService.adjustTepTo365Days(periodicPayment.tep, this.timeService.getFrequencyValue(periodicPayment.paymentFrequency))
-
-    let dates: Moment[] = this.timeService.getPaymentDates(moment(), periodicPayment.periods, periodicPayment.paymentFrequency)
-    let days: number[] = this.timeService.getDays(dates)
+    let days: number[] = this.getDays(periodicPayment)
     let arraySize = days.length
-
     let adjustedTEPs: number[] = []
 
     for (let i = 0; i < arraySize; i++) {
       adjustedTEPs.push((tep365 / 365) * days[i])
     }
-
     return adjustedTEPs
+  }
+
+  getDays(periodicPayment: PeriodicPayment): number[] {
+    let dates: Moment[] = this.timeService.getPaymentDates(moment(), periodicPayment.periods, periodicPayment.paymentFrequency)
+    let days: number[] = this.timeService.getDays(dates)
+    return days
+  }
+
+  calculateNewPeriodicPayment(periodicPayment: PeriodicPayment, finalBalance: number) {
+    let days: number = this.getDays(periodicPayment).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    let presentValue = this.financialService.bringToPresent(finalBalance, periodicPayment.tea, days)
+    let extraPeriodicPayment = this.financialService.calculatePeriodicPayment(presentValue, this.loan.tep + this.loan.mortgageLifeInsurance, this.loan.periods, 1)
+    return periodicPayment.periodicPayment + extraPeriodicPayment
   }
 
   onEdit(periodicPayment: PeriodicPayment) {
