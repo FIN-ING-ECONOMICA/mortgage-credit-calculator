@@ -73,4 +73,9 @@ export class FinancialService {
   calculateAllRiskInsurance(initialBalance: number, allRiskInsurance: number) {
     return initialBalance * (allRiskInsurance / 100)
   }
+
+  bringToPresent(futureValue:number, tea: number, days: number): number {
+    let presentValue = futureValue / ((1 + (tea / 100)) ** (days / 360))
+    return presentValue
+  }
 }
