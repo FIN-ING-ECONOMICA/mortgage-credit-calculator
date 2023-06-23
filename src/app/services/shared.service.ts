@@ -6,21 +6,7 @@ import { Loan } from "../models/loan";
 })
 export class SharedService {
 
-  loan: Loan = {
-    realStatePrice: 0,
-    initialPaymentPercentage: 0,
-    initialPayment: 0,
-    tea: 0,
-    tep: 0,
-    paymentFrequency: '',
-    years: 0,
-    periods: 0,
-    currency: '',
-    mortgageTransfer: 0,
-    administrativeExpenses: 0,
-    mortgageLifeInsurance: 0,
-    allRiskInsurance: 0
-  }
+  loan: Loan = {} as Loan
 
   constructor() { }
 

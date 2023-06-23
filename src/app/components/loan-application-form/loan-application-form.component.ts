@@ -60,8 +60,10 @@ export class LoanApplicationFormComponent {
       currency: this.loanForm.value.currency ?? '',
       mortgageTransfer: Number(this.loanForm.value.mortgageTransfer ?? 0),
       administrativeExpenses: Number(this.loanForm.value.administrativeExpenses ?? 0),
-      mortgageLifeInsurance: Number(this.loanForm.value.mortgageLifeInsurance ?? 0),
-      allRiskInsurance: Number(this.loanForm.value.allRiskInsurance ?? 0)
+      mortgageLifeInsurancePercentage: Number(this.loanForm.value.mortgageLifeInsurance ?? 0),
+      mortgageLifeInsurance: 0,
+      allRiskInsurancePercentage: Number(this.loanForm.value.allRiskInsurance ?? 0),
+      allRiskInsurance: 0
     }
     return loan
   }
