@@ -22,15 +22,15 @@
       </div>
       <div *ngIf="!row.edit">{{ row.gracePeriod }}</div>
     </td>
-    <td>{{ row.initialBalance }}</td>
-    <td>{{ row.interestAmount }}</td>
-    <td>{{ row.periodicPayment }}</td>
+    <td>{{ this.roundToNDecimals(row.initialBalance, 2) }}</td>
+    <td>{{ this.roundToNDecimals(row.interestAmount, 2) }}</td>
+    <td>{{ this.roundToNDecimals(row.periodicPayment, 2) }}</td>
     <td>{{ row.costs }}</td>
-    <td>{{ row.mortgageLifeInsurance }}</td>
-    <td>{{ row.allRiskInsurance }} %</td>
-    <td>{{ row.amortization }}</td>
-    <td>{{ row.finalBalance }}</td>
-    <td>{{ row.cashFlow }}</td>
+    <td>{{ this.roundToNDecimals(row.mortgageLifeInsurance, 2) }}</td>
+    <td>{{ this.roundToNDecimals(row.allRiskInsurance, 2) }}</td>
+    <td>{{ this.roundToNDecimals(row.amortization, 2) }}</td>
+    <td>{{ this.roundToNDecimals(row.finalBalance, 2) }}</td>
+    <td>{{ this.roundToNDecimals(row.cashFlow, 2) }}</td>
     <td>
       <div class="action-btn-container" *ngIf="row.edit">
         <button (click)="onSave(row)">Guardar</button>

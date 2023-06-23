@@ -24,8 +24,8 @@ export class SharedService {
 
   constructor() { }
 
-  roundTo7Decimals(num: number | string): number {
-    num = Number(num).toFixed(7)
+  roundToNDecimals(num: number | string, decimalPositions: number): number {
+    num = Number(num).toFixed(decimalPositions)
     return Number(num)
   }
 }

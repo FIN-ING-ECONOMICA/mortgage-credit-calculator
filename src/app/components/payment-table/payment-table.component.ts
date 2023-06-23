@@ -37,7 +37,7 @@ export class PaymentTableComponent {
   ]
   newTea: number = 0
   gracePeriodSelected: string = ''
-  roundTo7Decimals: (num: (number | string)) => number
+  roundToNDecimals: (num: (number | string), decimalPositions: number) => number
   gracePeriods = [
     'Sin',
     'Parcial',
@@ -47,9 +47,9 @@ export class PaymentTableComponent {
 
   constructor(private sharedService: SharedService, private financialService: FinancialService, private timeService: TimeService) {
     this.currency = this.financialService.getCurrency(this.sharedService.loan)
+    this.roundToNDecimals = this.sharedService.roundToNDecimals
     let periodicPayment: PeriodicPayment = this.convertLoanToPeriodicPayment(this.sharedService.loan)
     this.tableData = this.calculateTableData(periodicPayment)
-    this.roundTo7Decimals = this.sharedService.roundTo7Decimals
   }
 
   calculateTableData(periodicPayment: PeriodicPayment): Array<PeriodicPayment> {
@@ -60,6 +60,8 @@ export class PaymentTableComponent {
 
     // the periodic payment (cuota) is constant throughout all periods
     let _periodicPayment = this.financialService.calculatePeriodicPayment(periodicPayment.initialBalance, periodicPayment.tep, periodicPayment.periods, 1)
+    let mortgageLifeInsurancePercentage = periodicPayment.mortgageLifeInsurance;
+    let allRiskInsurancePercentage = periodicPayment.allRiskInsurance;
 
     for (let i = 0; i < arraySize; i++) {
 
@@ -67,25 +69,30 @@ export class PaymentTableComponent {
         periodicPayment = _tableData[i - 1]
       }
 
-      let initialBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(periodicPayment.initialBalance, periodicPayment.amortization))
-      let interestAmount = this.roundTo2Decimals(this.financialService.calculateInterestAmount(initialBalance, teps[i]))
-      let mortgageLifeInsurance = this.roundTo2Decimals(this.financialService.calculateMortgageLifeInsurance(initialBalance, periodicPayment.mortgageLifeInsurance))
-      let amortization = this.roundTo2Decimals(this.financialService.calculateAmortization(_periodicPayment, interestAmount))
-      let finalBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(initialBalance, amortization))
-      let cashFlow = this.roundTo2Decimals(this.financialService.calculateCashFlow(_periodicPayment, [periodicPayment.costs]))
+      let initialBalance = this.financialService.calculateFinalBalance(periodicPayment.initialBalance, periodicPayment.amortization)
+      let interestAmount = this.financialService.calculateInterestAmount(initialBalance, teps[i])
+      let mortgageLifeInsurance = this.financialService.calculateMortgageLifeInsurance(initialBalance, mortgageLifeInsurancePercentage)
+      let allRiskInsurance = this.financialService.calculateAllRiskInsurance(initialBalance, allRiskInsurancePercentage)
+
+      let amortization = this.financialService.calculateAmortization(_periodicPayment, interestAmount, [periodicPayment.costs, mortgageLifeInsurance, allRiskInsurance])
+
+      console.log(`Cuota: ${_periodicPayment}\nIntereses: ${interestAmount}\nCostos: ${periodicPayment.costs}\nDesgravamen: ${periodicPayment.mortgageLifeInsurance}\nSeguro de riesgo: ${periodicPayment.allRiskInsurance}`)
+
+      let finalBalance = this.financialService.calculateFinalBalance(initialBalance, amortization)
+      let cashFlow = this.financialService.calculateCashFlow(_periodicPayment)
 
       _tableData.push({
         paymentIndex: i + 1,
         initialBalance: initialBalance,
         finalBalance: finalBalance,
         tea: periodicPayment.tea,
-        tep: this.sharedService.roundTo7Decimals(teps[i]),
+        tep: this.roundToNDecimals(teps[i], 7),
         gracePeriod: 'Sin',
         interestAmount: interestAmount,
         periodicPayment: _periodicPayment,
         costs: periodicPayment.costs,
         mortgageLifeInsurance: mortgageLifeInsurance,
-        allRiskInsurance: periodicPayment.allRiskInsurance,
+        allRiskInsurance: allRiskInsurance,
         amortization: amortization,
         paymentFrequency: periodicPayment.paymentFrequency,
         periods: periodicPayment.periods,
@@ -134,10 +141,6 @@ export class PaymentTableComponent {
     return adjustedTEPs
   }
 
-  roundTo2Decimals(num: number) {
-    return Number(num.toFixed(2))
-  }
-
   onEdit(periodicPayment: PeriodicPayment) {
     periodicPayment.edit = !periodicPayment.edit;
   }
@@ -174,21 +177,21 @@ export class PaymentTableComponent {
         currentPayment.initialBalance = this.sharedService.loan.initialPayment
       }
 
-      tep = this.roundTo7Decimals(this.financialService.teaToTep(currentPayment.tea, this.timeService.getFrequencyValue(currentPayment.paymentFrequency)))
-      interestAmount = this.roundTo2Decimals(this.financialService.calculateInterestAmount(currentPayment.initialBalance, tep))
+      tep = this.roundToNDecimals(this.financialService.teaToTep(currentPayment.tea, this.timeService.getFrequencyValue(currentPayment.paymentFrequency)), 7)
+      interestAmount = this.roundToNDecimals(this.financialService.calculateInterestAmount(currentPayment.initialBalance, tep), 2)
 
       if (currentPayment.gracePeriod === 'Parcial') {
         periodicPayment = interestAmount
         amortization = 0
-        finalBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(currentPayment.initialBalance, amortization))
+        finalBalance = this.roundToNDecimals(this.financialService.calculateFinalBalance(currentPayment.initialBalance, amortization), 2)
       } else if (currentPayment.gracePeriod === 'Total') {
         periodicPayment = 0
         amortization = 0
         finalBalance = currentPayment.initialBalance + interestAmount
       } else {
-        periodicPayment = this.roundTo2Decimals(this.financialService.calculatePeriodicPayment(currentPayment.initialBalance, tep, currentPayment.periods, i + 1))
-        amortization = this.roundTo2Decimals(this.financialService.calculateAmortization(periodicPayment, interestAmount))
-        finalBalance = this.roundTo2Decimals(this.financialService.calculateFinalBalance(currentPayment.initialBalance, amortization))
+        periodicPayment = this.roundToNDecimals(this.financialService.calculatePeriodicPayment(currentPayment.initialBalance, tep, currentPayment.periods, i + 1), 2)
+        amortization = this.roundToNDecimals(this.financialService.calculateAmortization(periodicPayment, interestAmount, [0]), 2)
+        finalBalance = this.roundToNDecimals(this.financialService.calculateFinalBalance(currentPayment.initialBalance, amortization), 2)
       }
 
       this.tableData[i].initialBalance = currentPayment.initialBalance
