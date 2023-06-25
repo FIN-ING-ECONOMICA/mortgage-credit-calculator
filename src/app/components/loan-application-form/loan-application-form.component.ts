@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { FinancialService } from "../../services/financial.service";
 import { SharedService } from "../../services/shared.service";
 import { Router } from "@angular/router";
 import { Loan } from "../../models/loan";
@@ -32,8 +31,7 @@ export class LoanApplicationFormComponent {
   roundToNDecimals: (num: (number | string), decimalPositions: number) => number
   currencies: string[] = ['Soles', 'Dólares']
 
-  constructor(private financialService: FinancialService, private sharedService: SharedService,
-              private router: Router, private timeService: TimeService) {
+  constructor(private sharedService: SharedService, private router: Router, private timeService: TimeService) {
     this.frequencies = this.timeService.getFrequencies();
     this.roundToNDecimals = this.sharedService.roundToNDecimals
   }
@@ -51,12 +49,12 @@ export class LoanApplicationFormComponent {
     let loan: Loan = {
       realStatePrice: Number(this.loanForm.value.realStatePrice) ?? 0,
       initialPaymentPercentage: Number(this.loanForm.value.initialPaymentPercentage) ?? 0,
-      initialPayment: this.financialService.calculateLoan(Number(this.loanForm.value.initialPaymentPercentage) ?? 0, Number(this.loanForm.value.realStatePrice) ?? 0),
+      initialPayment: 0,
       tea: Number(this.loanForm.value.tea) ?? 0,
-      tep: this.roundToNDecimals(this.financialService.teaToTep(Number(this.loanForm.value.tea) ?? 0, this.timeService.getFrequencyValue(this.loanForm.value.paymentFrequency ?? '')), 7),
+      tep: 0,
       paymentFrequency: this.loanForm.value.paymentFrequency ?? '',
       years: Number(this.loanForm.value.years) ?? 0,
-      periods: this.financialService.getPeriod(this.timeService.getFrequencyValue(this.loanForm.value.paymentFrequency ?? ''), Number(this.loanForm.value.years) ?? 0),
+      periods: 0,
       currency: this.loanForm.value.currency ?? '',
       mortgageTransfer: Number(this.loanForm.value.mortgageTransfer ?? 0),
       administrativeExpenses: Number(this.loanForm.value.administrativeExpenses ?? 0),
