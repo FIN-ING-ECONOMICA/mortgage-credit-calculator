@@ -17,19 +17,15 @@ export class PaymentSummaryComponent {
   currency: string = ''
 
   constructor(private sharedService: SharedService, private financialService: FinancialService) {
-    console.log('Payment Summary:', this.sharedService.loan)
     this.currency = this.financialService.getCurrency(this.sharedService.loan)
     this.headersAndValues = this.getLoanValues()
   }
 
   getLoanValues() {
     return {
-      'Precio de Venta': this.currency + ' ' + this.sharedService.loan.realStatePrice,
-      '% Cuota Inicial': this.sharedService.loan.initialPaymentPercentage + '%',
-      'Préstamo': this.currency + ' '  + this.sharedService.loan.initialPayment,
+      'Precio del inmueble': this.currency + ' ' + this.sharedService.loan.realStatePrice,
       'Frecuencia': this.sharedService.loan.paymentFrequency,
       'Cantidad de años': this.sharedService.loan.years,
-      'Cantidad de periodos': this.sharedService.loan.periods,
       'Divisa': this.sharedService.loan.currency
     }
   }
