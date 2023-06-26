@@ -9,7 +9,10 @@ export class FinancialService {
   constructor() { }
 
   calculateInitialPayment(percentage: number, realStatePrice: number): number {
-    return realStatePrice * percentage / 100
+    if (percentage > 0) {
+      return realStatePrice * percentage / 100
+    }
+    return realStatePrice
   }
 
   calculateLoan(percentage: number, realStatePrice: number): number {
@@ -65,9 +68,9 @@ export class FinancialService {
     }
   }
 
-  // calcular seguro de desgravamen
-  calculateMortgageLifeInsurance(initialBalance: number, mortgageLifeInsurance: number): number {
-    return initialBalance * (mortgageLifeInsurance / 100)
+  // Calcula el seguro de desgravamen
+  calculateMortgageLifeInsurance(initialBalance: number, mortgageLifeInsurance: number, periodDays: number, paymentFrequency: number): number {
+    return initialBalance * ((mortgageLifeInsurance / 100) * (periodDays / paymentFrequency))
   }
 
   calculateAllRiskInsurance(initialBalance: number, allRiskInsurance: number) {
@@ -77,5 +80,9 @@ export class FinancialService {
   bringToPresent(futureValue:number, tea: number, days: number): number {
     let presentValue = futureValue / ((1 + (tea / 100)) ** (days / 360))
     return presentValue
+  }
+
+  calculateIterationPayment(lastIterationPayment: number, extraPayment: number): number {
+    return lastIterationPayment + extraPayment
   }
 }
