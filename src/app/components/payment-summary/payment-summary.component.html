@@ -3,18 +3,21 @@
     <h1>Plan de Pagos</h1>
   </div>
   <div class="table-container">
-    <table class="loan-table">
-      <tr *ngFor="let header of headersAndValues| keyvalue">
-        <td>{{ header.key }}</td> <!-- Display header in the first column -->
-        <td>
-          <table class="inside-table">
-            <tr>
-              <td>{{ header.value }}</td> <!-- Display corresponding data in the second column -->
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
+    <div>
+      <table class="loan-table">
+        <tr *ngFor="let header of headersAndValues| keyvalue">
+          <td>{{ header.key }}</td> <!-- Display header in the first column -->
+          <td>
+            <table class="inside-table">
+              <tr>
+                <td>{{ header.value }}</td> <!-- Display corresponding data in the second column -->
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <button class="van-tir-btn">VAN y TIR</button>
+    </div>
     <app-payment-table></app-payment-table>
   </div>
 </div>
