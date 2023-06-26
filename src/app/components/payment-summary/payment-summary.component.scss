@@ -1,20 +1,38 @@
-.container {
+.page-container {
+  background-color: var(--background-color-2);
+
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.page-title {
+  display: flex;
+  padding: 2% 2%;
+  justify-content: center;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.table-container {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
   align-items: flex-start;
-
-  padding: 5% 2%;
+  gap: 15px;
+  padding: 1% 2% 2% 1%;
 }
 
 .loan-table {
   border-collapse: collapse;
+  background: linear-gradient(180deg, #CBFEC7 0%, rgba(84, 222, 252, 0.58) 100%);
 
   font-size: 13px;
 
   td {
     padding: 8px;
-    border: 1px solid black;
+    border: 1px solid #7F7F7F;
   }
 }
 

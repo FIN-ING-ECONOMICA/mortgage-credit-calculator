@@ -20,7 +20,7 @@ input[type=number] {
 }
 
 .loan-application {
-  background-color: #F3FFEF;
+  background-color: var(--background-color-2);
   border-radius: 10px;
 
   box-sizing: border-box;
@@ -29,7 +29,6 @@ input[type=number] {
 }
 
 .form-grid {
-  //border: 3px solid #3c82da;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -42,7 +41,6 @@ input[type=number] {
     gap: 20px;
 
     div:nth-child(2) {
-      //border: 3px solid #313131;
       div {
         width: 100%;
         max-width: 250px;
