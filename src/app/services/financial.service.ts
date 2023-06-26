@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Loan } from "../models/loan";
+import { Moment } from "moment";
+import { TimeService } from "./time.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FinancialService {
 
-  constructor() { }
+  constructor(private timeService: TimeService) { }
 
   calculateInitialPayment(percentage: number, realStatePrice: number): number {
     if (percentage > 0) {
@@ -84,5 +86,24 @@ export class FinancialService {
 
   calculateIterationPayment(lastIterationPayment: number, extraPayment: number): number {
     return lastIterationPayment + extraPayment
+  }
+
+  calculateVan(dates: Moment[], cashFlow: number[], cok: number): number {
+
+    let periods: number = dates.length
+    let startDate: Moment = dates[0]
+    let presentCashFlows: number[] = [];
+    let cashFlowBroughtToPresent: number = 0;
+    let daysDifference: number = 0;
+
+    for (let i: number = 0; i < periods; i++) {
+      daysDifference = this.timeService.calculateDateDifference(startDate, dates[i])
+      cashFlowBroughtToPresent = this.bringToPresent(cashFlow[i], cok, daysDifference)
+      presentCashFlows.push(cashFlowBroughtToPresent)
+    }
+
+    let van: number = presentCashFlows.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+    return van
   }
 }
