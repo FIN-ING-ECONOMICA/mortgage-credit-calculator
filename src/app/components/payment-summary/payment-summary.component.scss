@@ -12,6 +12,9 @@
 
   h1 {
     margin: 0;
+    background-image: linear-gradient(180deg, rgba(3, 240, 74, 1) 0%, rgba(37, 179, 184, 1) 100%);
+    -webkit-background-clip: text;
+    color: transparent;
   }
 }
 
