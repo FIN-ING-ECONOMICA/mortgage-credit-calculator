@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { SharedService } from "../../services/shared.service";
 import { PaymentTableComponent } from "../payment-table/payment-table.component";
 import { FinancialService } from "../../services/financial.service";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-payment-summary',
   standalone: true,
-  imports: [CommonModule, PaymentTableComponent],
+  imports: [CommonModule, PaymentTableComponent, RouterLink],
   templateUrl: './payment-summary.component.html',
   styleUrls: ['./payment-summary.component.scss']
 })
