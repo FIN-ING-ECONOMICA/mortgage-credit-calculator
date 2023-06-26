@@ -11,22 +11,31 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+.background {
+  background-color: var(--background-color);
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
 .loan-application {
   background-color: #F3FFEF;
   border-radius: 10px;
 
-  width: 80%;
-  padding: 1% 5%;
+  box-sizing: border-box;
+  width: 60%;
+  padding: 10px 0 30px 5%;
 }
 
 .form-grid {
   //border: 3px solid #3c82da;
   display: flex;
   flex-flow: row wrap;
+  align-items: center;
 
   .col {
-    //border: 3px solid #e59113;
-    width: 45%;
+    width: 40%;
 
     display: flex;
     flex-flow: column nowrap;
@@ -38,6 +47,10 @@ input[type=number] {
         width: 100%;
         max-width: 250px;
       }
+    }
+
+    + .col {
+      margin-left: 40px;
     }
   }
 }
@@ -86,7 +99,7 @@ select {
 }
 
 .calc-button {
-  margin-top: 20px;
+  margin-top: 30px;
 
   button {
     width: 100%;
@@ -96,7 +109,8 @@ select {
     border-radius: var(--input-border-radius);
 
     background-color: #2FB4FF;
-    border: 1px solid #076CA5;
+    border: none;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
     color: #fff;
     font-weight: 500;
