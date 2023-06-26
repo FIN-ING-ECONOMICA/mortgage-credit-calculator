@@ -40,13 +40,6 @@ input[type=number] {
     flex-flow: column nowrap;
     gap: 20px;
 
-    div:nth-child(2) {
-      div {
-        width: 100%;
-        max-width: 250px;
-      }
-    }
-
     + .col {
       margin-left: 40px;
     }
@@ -144,3 +137,49 @@ select {
     font-size: 13px;
   }
 }
+
+.form-field-info {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-content: center;
+
+  width: 100%;
+  max-width: 250px;
+}
+
+.help-icon {
+  width: 20px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+
+  width: 200px;
+  font-size: 13px;
+
+  background-color: #ffc072;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #000;
+  padding: 10px 10px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 1;
+  transform: translateX(1%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltiptext ul {
+  padding: 0;
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+

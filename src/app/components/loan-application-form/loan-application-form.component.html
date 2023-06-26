@@ -5,7 +5,14 @@
     <section class="form-grid">
       <div class="col">
         <div>
-          <div>Precio del inmueble</div>
+          <div class="form-field-info">
+            <div>Precio del inmueble</div>
+            <div class="tooltip">
+              <img class="help-icon" src="assets/icons8-ayuda-48.png" alt="Help Icon"/>
+              <span class="tooltiptext">Precio de venta de la casa o departamento</span>
+            </div>
+          </div>
+
           <input type="number" min="0" placeholder="Precio del inmueble" [formControlName]="'realStatePrice'">
 
           <div class="errors" *ngIf="loanForm.get('realStatePrice')?.invalid && loanForm.get('realStatePrice')?.touched">
@@ -15,7 +22,19 @@
         </div>
 
         <div>
-          <div>Cuota inicial (debe ser mayor o igual a 7.5%)</div>
+          <div class="form-field-info">
+            <div>Cuota inicial</div>
+            <div class="tooltip">
+              <img class="help-icon" src="assets/icons8-ayuda-48.png" alt="Help Icon"/>
+              <span class="tooltiptext">
+                <li>Permitirá calcular el porcentaje del total que pagará al inicio del crédito</li>
+                <li>Escriba solo el número del porcentaje</li>
+                <li>No realize ninguna conversión. Es decir, no divida el monto entre 100</li>
+                <li>No escriba el signo %</li>
+              </span>
+            </div>
+          </div>
+
           <input type="number" placeholder="Porcentaje de la cuota inicial%" [formControlName]="'initialPaymentPercentage'">
 
           <div class="errors" *ngIf="loanForm.get('initialPaymentPercentage')?.invalid && loanForm.get('initialPaymentPercentage')?.touched">
@@ -25,7 +44,17 @@
         </div>
 
         <div>
-          <div>Tasa Efectiva Anual (TEA)</div>
+          <div class="form-field-info">
+            <div>Tasa Efectiva Anual (TEA)</div>
+            <div class="tooltip">
+              <img class="help-icon" src="assets/icons8-ayuda-48.png" alt="Help Icon"/>
+              <span class="tooltiptext">
+                <li>Escriba solo el número del porcentaje</li>
+                <li>No realize ninguna conversión. Es decir, no divida el monto entre 100</li>
+                <li>No escriba el signo %</li>
+              </span>
+            </div>
+          </div>
           <input type="number" placeholder="TEA%" [formControlName]="'tea'">
 
           <div class="errors" *ngIf="loanForm.get('tea')?.invalid && loanForm.get('tea')?.touched">
@@ -35,7 +64,14 @@
         </div>
 
         <div>
-          <div>Frecuencia de pago</div>
+          <div class="form-field-info">
+            <div>Frecuencia de pago</div>
+            <div class="tooltip">
+              <img class="help-icon" src="assets/icons8-ayuda-48.png" alt="Help Icon"/>
+              <span class="tooltiptext">¿Con qué frecuencia desea pagar el crédito?</span>
+            </div>
+          </div>
+
           <select [formControlName]="'paymentFrequency'">
             <option disabled selected value="">Frecuencia de pago</option>
             <option *ngFor="let frequency of frequencies" [value]="frequency">{{ frequency }}</option>
@@ -47,7 +83,14 @@
         </div>
 
         <div>
-          <div>Duración del préstamo (en años)</div>
+          <div class="form-field-info">
+            <div>Duración del préstamo</div>
+            <div class="tooltip">
+              <img class="help-icon" src="assets/icons8-ayuda-48.png" alt="Help Icon"/>
+              <span class="tooltiptext">¿En cuántos años desea pagar el préstamo?</span>
+            </div>
+          </div>
+
           <input type="number" placeholder="Cantidad de años del préstamo" [formControlName]="'years'">
 
           <div class="errors" *ngIf="loanForm.get('years')?.invalid && loanForm.get('years')?.touched">
@@ -57,7 +100,13 @@
         </div>
 
         <div>
-          <div>Importe Asegurado</div>
+          <div class="form-field-info">
+            <div>Importe Asegurado</div>
+            <div class="tooltip">
+              <img class="help-icon" src="assets/icons8-ayuda-48.png" alt="Help Icon"/>
+              <span class="tooltiptext">Es el monto máximo que el prestatario recibirá en caso de un siniestro</span>
+            </div>
+          </div>
           <input type="number" min="0" placeholder="Importe Asegurado" [formControlName]="'insuredAmount'">
 
           <div class="errors" *ngIf="loanForm.get('insuredAmount')?.invalid && loanForm.get('insuredAmount')?.touched">
