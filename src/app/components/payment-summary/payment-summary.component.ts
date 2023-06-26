@@ -26,7 +26,8 @@ export class PaymentSummaryComponent {
       'Precio del inmueble': this.currency + ' ' + this.sharedService.loan.realStatePrice,
       'Frecuencia': this.sharedService.loan.paymentFrequency,
       'Cantidad de años': this.sharedService.loan.years,
-      'Divisa': this.sharedService.loan.currency
+      'Divisa': this.sharedService.loan.currency,
+      'Importe Asegurado': this.sharedService.loan.insuredAmount
     }
   }
 }
