@@ -54,6 +54,16 @@
           <div *ngIf="loanForm.get('years')?.errors?.['min']">La duración del préstamo no puede ser negativa</div>
         </div>
       </div>
+
+      <div>
+        <div>Importe Asegurado</div>
+        <input type="number" min="0" placeholder="Importe Asegurado" [formControlName]="'insuredAmount'">
+
+        <div class="errors" *ngIf="loanForm.get('insuredAmount')?.invalid && loanForm.get('insuredAmount')?.touched">
+          <div *ngIf="loanForm.get('insuredAmount')?.errors?.['required']">Campo requerido</div>
+          <div *ngIf="loanForm.get('insuredAmount')?.errors?.['min']">El importe asegurado no puede ser negativo</div>
+        </div>
+      </div>
     </div>
 
     <div class="col">

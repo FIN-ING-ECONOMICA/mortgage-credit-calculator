@@ -25,7 +25,8 @@ export class LoanApplicationFormComponent {
     mortgageTransfer: new FormControl('', [Validators.required, Validators.min(0)]),
     administrativeExpenses: new FormControl('', [Validators.required, Validators.min(0)]),
     mortgageLifeInsurance: new FormControl('', [Validators.required, Validators.min(0)]),
-    allRiskInsurance: new FormControl('', [Validators.required, Validators.min(0)])
+    allRiskInsurance: new FormControl('', [Validators.required, Validators.min(0)]),
+    insuredAmount: new FormControl('', [Validators.required, Validators.min(0)])
   })
   frequencies: string[] = [];
   roundToNDecimals: (num: (number | string), decimalPositions: number) => number
@@ -61,7 +62,8 @@ export class LoanApplicationFormComponent {
       mortgageLifeInsurancePercentage: Number(this.loanForm.value.mortgageLifeInsurance ?? 0),
       mortgageLifeInsurance: 0,
       allRiskInsurancePercentage: Number(this.loanForm.value.allRiskInsurance ?? 0),
-      allRiskInsurance: 0
+      allRiskInsurance: 0,
+      insuredAmount: Number(this.loanForm.value.insuredAmount ?? 0)
     }
     return loan
   }

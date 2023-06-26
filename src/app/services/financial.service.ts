@@ -56,8 +56,8 @@ export class FinancialService {
     return initialBalance - amortization;
   }
 
-  calculateCashFlow(periodicPayment: number): number {
-    return periodicPayment;
+  calculateCashFlow(periodicPayment: number, allRiskInsurance: number): number {
+    return periodicPayment + allRiskInsurance;
   }
 
   getCurrency(loan: Loan): string {
@@ -73,8 +73,8 @@ export class FinancialService {
     return initialBalance * ((mortgageLifeInsurance / 100) * (periodDays / paymentFrequency))
   }
 
-  calculateAllRiskInsurance(initialBalance: number, allRiskInsurance: number) {
-    return initialBalance * (allRiskInsurance / 100)
+  calculateAllRiskInsurance(insuredAmount: number, allRiskInsurancePercentage: number, paymentFrequency: number): number {
+    return insuredAmount * ((allRiskInsurancePercentage / 100) / (360 / paymentFrequency))
   }
 
   bringToPresent(futureValue:number, tea: number, days: number): number {

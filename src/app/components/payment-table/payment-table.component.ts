@@ -63,12 +63,14 @@ export class PaymentTableComponent {
 
     const initialPeriodicPayment = periodicPayment
     let payment: number = 0
-    let lastIterationPayment =0
+    let lastIterationPayment = 0
     let presentValue: number = 0
     let extraPayment: number = 0
 
     let finalTableFound: boolean = false
     let finalTable: Array<PeriodicPayment> = []
+
+    let allRiskInsurance = this.financialService.calculateAllRiskInsurance(periodicPayment.insuredAmount, periodicPayment.allRiskInsurancePercentage, this.timeService.getFrequencyValue(periodicPayment.paymentFrequency))
 
     for (let i: number = 0; i < 20; i++) {
 
@@ -89,8 +91,7 @@ export class PaymentTableComponent {
         let mortgageLifeInsurance = this.financialService.calculateMortgageLifeInsurance(initialBalance, periodicPayment.mortgageLifeInsurancePercentage, days[j], this.timeService.getFrequencyValue(periodicPayment.paymentFrequency))
         let amortization = this.financialService.calculateAmortization(payment, interestAmount, [mortgageLifeInsurance, periodicPayment.costs])
         let finalBalance = this.financialService.calculateFinalBalance(initialBalance, amortization)
-        //let allRiskInsurance = this.financialService.calculateAllRiskInsurance(initialBalance, periodicPayment.allRiskInsurancePcentage)
-        let cashFlow = this.financialService.calculateCashFlow(payment)
+        let cashFlow = this.financialService.calculateCashFlow(payment, allRiskInsurance)
 
         _tableData.push({
           paymentIndex: j + 1,
@@ -104,7 +105,8 @@ export class PaymentTableComponent {
           costs: periodicPayment.costs,
           mortgageLifeInsurance: mortgageLifeInsurance,
           mortgageLifeInsurancePercentage: periodicPayment.mortgageLifeInsurancePercentage,
-          allRiskInsurance: 0,
+          insuredAmount: periodicPayment.insuredAmount,
+          allRiskInsurance: allRiskInsurance,
           allRiskInsurancePercentage: periodicPayment.allRiskInsurancePercentage,
           amortization: amortization,
           paymentFrequency: periodicPayment.paymentFrequency,
@@ -161,6 +163,7 @@ export class PaymentTableComponent {
       mortgageLifeInsurance: 0,
       allRiskInsurancePercentage: loan.allRiskInsurancePercentage,
       allRiskInsurance: 0,
+      insuredAmount: loan.insuredAmount,
       amortization: 0,
       paymentFrequency: loan.paymentFrequency,
       periods: this.financialService.getPeriod(this.timeService.getFrequencyValue(loan.paymentFrequency), loan.years),

@@ -14,4 +14,5 @@ export interface Loan {
   mortgageLifeInsurancePercentage: number,
   allRiskInsurance: number,
   allRiskInsurancePercentage: number,
+  insuredAmount: number
 }

@@ -11,6 +11,7 @@ export interface PeriodicPayment {
   costs: number,
   mortgageLifeInsurance: number,
   mortgageLifeInsurancePercentage: number,
+  insuredAmount: number,
   allRiskInsurance: number,
   allRiskInsurancePercentage: number,
   amortization: number,
