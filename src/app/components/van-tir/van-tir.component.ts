@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SharedService } from "../../services/shared.service";
 
 @Component({
   selector: 'app-van-tir',
@@ -10,4 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class VanTirComponent {
 
+  constructor(private sharedService: SharedService) {
+    console.log(this.sharedService.cashFlow)
+  }
 }
