@@ -13,7 +13,7 @@
       </div>
       <div *ngIf="!row.edit">{{ row.tea }}%</div>
     </td>
-    <td>{{ row.tep }}%</td>
+    <td>{{ this.roundToNDecimals(row.tep, 7) }}%</td>
     <td>
       <div *ngIf="row.edit">
         <select [(ngModel)]="gracePeriodSelected">
