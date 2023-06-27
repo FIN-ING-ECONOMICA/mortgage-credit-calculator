@@ -45,21 +45,22 @@ export class PaymentTableComponent {
   ]
   currency: string = ''
   loan: Loan = {} as Loan
+  days: number[] = []
+  teps: number[] = []
 
   constructor(private sharedService: SharedService, private financialService: FinancialService, private timeService: TimeService) {
     this.loan = this.sharedService.loan
     this.currency = this.financialService.getCurrency(this.loan)
     this.roundToNDecimals = this.sharedService.roundToNDecimals
     let periodicPayment: PeriodicPayment = this.convertLoanToPeriodicPayment(this.loan)
+    this.days = this.getDays(periodicPayment)
+    this.teps = this.adjustTepToPeriod(periodicPayment, this.days)
     this.tableData = this.calculateTableData(periodicPayment)
   }
 
-  calculateTableData(periodicPayment: PeriodicPayment)/*: Array<PeriodicPayment> */{
+  calculateTableData(periodicPayment: PeriodicPayment): Array<PeriodicPayment> {
 
     let paymentPeriods = periodicPayment.periods;
-
-    let days: number[] = this.getDays(periodicPayment)
-    let teps: number[] = this.adjustTepToPeriod(periodicPayment, days)
 
     const initialPeriodicPayment = periodicPayment
     let payment: number = 0
@@ -75,7 +76,7 @@ export class PaymentTableComponent {
     for (let i: number = 0; i < 20; i++) {
 
       if (i === 0) {
-        payment = this.financialService.calculatePeriodicPayment(periodicPayment.initialBalance, teps[0] + periodicPayment.mortgageLifeInsurancePercentage, periodicPayment.periods, 1)
+        payment = this.financialService.calculatePeriodicPayment(periodicPayment.initialBalance, this.teps[0] + periodicPayment.mortgageLifeInsurancePercentage, periodicPayment.periods, 1)
       }
 
       let _tableData: Array<PeriodicPayment> = []
@@ -87,8 +88,8 @@ export class PaymentTableComponent {
         }
 
         let initialBalance = this.financialService.calculateFinalBalance(periodicPayment.initialBalance, periodicPayment.amortization)
-        let interestAmount = this.financialService.calculateInterestAmount(initialBalance, teps[j])
-        let mortgageLifeInsurance = this.financialService.calculateMortgageLifeInsurance(initialBalance, periodicPayment.mortgageLifeInsurancePercentage, days[j], this.timeService.getFrequencyValue(periodicPayment.paymentFrequency))
+        let interestAmount = this.financialService.calculateInterestAmount(initialBalance, this.teps[j])
+        let mortgageLifeInsurance = this.financialService.calculateMortgageLifeInsurance(initialBalance, periodicPayment.mortgageLifeInsurancePercentage, this.days[j], this.timeService.getFrequencyValue(periodicPayment.paymentFrequency))
         let amortization = this.financialService.calculateAmortization(payment, interestAmount, [mortgageLifeInsurance, periodicPayment.costs])
         let finalBalance = this.financialService.calculateFinalBalance(initialBalance, amortization)
         let cashFlow = this.financialService.calculateCashFlow(payment, allRiskInsurance)
@@ -98,7 +99,7 @@ export class PaymentTableComponent {
           initialBalance: initialBalance,
           finalBalance: finalBalance,
           tea: periodicPayment.tea,
-          tep: this.roundToNDecimals(teps[j], 7),
+          tep: this.roundToNDecimals(this.teps[j], 7),
           gracePeriod: 'Sin',
           interestAmount: interestAmount,
           periodicPayment: payment,
@@ -151,7 +152,7 @@ export class PaymentTableComponent {
   convertLoanToPeriodicPayment(loan: Loan): PeriodicPayment {
     let periodicPayment: PeriodicPayment = {
       paymentIndex: 0,
-      initialBalance: this.financialService.calculateInitialPayment(loan.initialPaymentPercentage, loan.realStatePrice),
+      initialBalance: this.financialService.calculateLoan(loan.initialPaymentPercentage, loan.realStatePrice),
       finalBalance: 0,
       tea: loan.tea,
       tep: this.financialService.teaToTep(loan.tea, this.timeService.getFrequencyValue(loan.paymentFrequency)),
@@ -207,56 +208,9 @@ export class PaymentTableComponent {
     this.tableData[rowIndex].tea = this.newTea
     this.tableData[rowIndex].gracePeriod = this.gracePeriodSelected
 
-    this.updateTable()
+    //this.updateTable()
 
     periodicPayment.edit = !periodicPayment.edit;
-  }
-
-  updateTable(): void {
-    let tableSize = this.tableData.length
-    let currentPayment: PeriodicPayment = {} as PeriodicPayment
-
-    let tep: number
-    let interestAmount: number
-    let periodicPayment: number
-    let amortization: number
-    let finalBalance: number
-
-    for (let i = 0; i < tableSize; i++) {
-
-      currentPayment = this.tableData[i]
-
-      // calculate initial balance
-      if (i > 0) {
-        currentPayment.initialBalance = this.tableData[i - 1].finalBalance
-      } else {
-        currentPayment.initialBalance = this.sharedService.loan.initialPayment
-      }
-
-      tep = this.roundToNDecimals(this.financialService.teaToTep(currentPayment.tea, this.timeService.getFrequencyValue(currentPayment.paymentFrequency)), 7)
-      interestAmount = this.roundToNDecimals(this.financialService.calculateInterestAmount(currentPayment.initialBalance, tep), 2)
-
-      if (currentPayment.gracePeriod === 'Parcial') {
-        periodicPayment = interestAmount
-        amortization = 0
-        finalBalance = this.roundToNDecimals(this.financialService.calculateFinalBalance(currentPayment.initialBalance, amortization), 2)
-      } else if (currentPayment.gracePeriod === 'Total') {
-        periodicPayment = 0
-        amortization = 0
-        finalBalance = currentPayment.initialBalance + interestAmount
-      } else {
-        periodicPayment = this.roundToNDecimals(this.financialService.calculatePeriodicPayment(currentPayment.initialBalance, tep, currentPayment.periods, i + 1), 2)
-        amortization = this.roundToNDecimals(this.financialService.calculateAmortization(periodicPayment, interestAmount, [0]), 2)
-        finalBalance = this.roundToNDecimals(this.financialService.calculateFinalBalance(currentPayment.initialBalance, amortization), 2)
-      }
-
-      this.tableData[i].initialBalance = currentPayment.initialBalance
-      this.tableData[i].tep = tep
-      this.tableData[i].interestAmount = interestAmount
-      this.tableData[i].periodicPayment = periodicPayment
-      this.tableData[i].amortization = amortization
-      this.tableData[i].finalBalance = finalBalance
-    }
   }
 
   onTeaInput(event: any) {
