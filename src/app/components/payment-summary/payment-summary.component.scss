@@ -1,18 +1,31 @@
-.page-container {
+.page-background {
+  background-color: var(--background-color);
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+
+  padding: 20px 0;
+}
+
+.page-content {
   background-color: var(--background-color-2);
 
   display: flex;
   flex-flow: column nowrap;
+
+  width: 90%;
+  border-radius: 10px;
 }
 
 .page-title {
   display: flex;
-  padding: 2% 2%;
-  justify-content: center;
+  padding: 2% 3%;
+  justify-content: flex-start;
 
   h1 {
     margin: 0;
-    background-image: linear-gradient(180deg, rgba(3, 240, 74, 1) 0%, rgba(37, 179, 184, 1) 100%);
+    background-image: linear-gradient(180deg, rgba(43, 43, 43, 1) 0%, rgba(126, 126, 126, 1) 100%);
     -webkit-background-clip: text;
     color: transparent;
   }
@@ -20,16 +33,25 @@
 
 .table-container {
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
+  flex-flow: column wrap;
+  justify-content: flex-start;
   align-items: flex-start;
   gap: 15px;
-  padding: 1% 2% 2% 1%;
+  padding: 0 2% 2% 3%;
+}
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-end;
+
+  width: 50%;
+  gap: 5%;
 }
 
 .loan-table {
   border-collapse: collapse;
-  background: linear-gradient(180deg, #CBFEC7 0%, rgba(84, 222, 252, 0.58) 100%);
+  //background: linear-gradient(180deg, #CBFEC7 0%, rgba(84, 222, 252, 0.58) 100%);
 
   font-size: 13px;
 
@@ -48,20 +70,18 @@
 
 .van-tir-btn {
   width: 100%;
-  max-width: 130px;
-
-  margin-top: 15px;
+  max-width: 110px;
+  height: 40px;
 
   padding: var(--input-padding);
-  border-radius: var(--input-border-radius);
-
+  border-radius: 7px;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
   background-color: #3db8ff;
   border: none;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
   color: #eeeeee;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .van-tir-btn:hover {
