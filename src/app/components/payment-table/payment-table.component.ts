@@ -8,11 +8,12 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TimeService } from "../../services/time.service";
 import * as moment from "moment";
 import { Moment } from "moment";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-payment-table',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './payment-table.component.html',
   styleUrls: ['./payment-table.component.scss']
 })
@@ -61,7 +62,6 @@ export class PaymentTableComponent {
   calculateTableData(periodicPayment: PeriodicPayment): Array<PeriodicPayment> {
 
     let paymentPeriods = periodicPayment.periods;
-
     const initialPeriodicPayment = periodicPayment
     let payment: number = 0
     let lastIterationPayment = 0
