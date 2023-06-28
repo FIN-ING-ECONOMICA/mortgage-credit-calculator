@@ -88,22 +88,19 @@ export class FinancialService {
     return lastIterationPayment + extraPayment
   }
 
-  calculateVan(dates: Moment[], cashFlow: number[], cok: number): number {
-
-    let periods: number = dates.length
-    let startDate: Moment = dates[0]
+  calculateVan(dates: Moment[], startDate: Moment, cashFlow: number[], cok: number, initialPayment: number = 0): number {
+    let periods: number = cashFlow.length
     let presentCashFlows: number[] = [];
     let cashFlowBroughtToPresent: number = 0;
     let daysDifference: number = 0;
 
-    for (let i: number = 0; i < periods; i++) {
+    for (let i: number = 1; i <= periods; i++) {
       daysDifference = this.timeService.calculateDateDifference(startDate, dates[i])
-      cashFlowBroughtToPresent = this.bringToPresent(cashFlow[i], cok, daysDifference)
+      cashFlowBroughtToPresent = this.bringToPresent(cashFlow[i - 1], cok, daysDifference)
       presentCashFlows.push(cashFlowBroughtToPresent)
     }
 
-    let van: number = presentCashFlows.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-
+    let van: number = initialPayment + presentCashFlows.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     return van
   }
 }

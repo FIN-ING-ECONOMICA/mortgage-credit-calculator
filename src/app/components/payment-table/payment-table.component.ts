@@ -54,11 +54,10 @@ export class PaymentTableComponent {
     this.currency = this.financialService.getCurrency(this.loan)
     this.roundToNDecimals = this.sharedService.roundToNDecimals
     let periodicPayment: PeriodicPayment = this.convertLoanToPeriodicPayment(this.loan)
-    this.sharedService.cashFlow.push(this.financialService.calculateInitialPayment(this.loan.initialPaymentPercentage, this.loan.realStatePrice))
     this.days = this.getDays(periodicPayment)
     this.teps = this.adjustTepToPeriod(periodicPayment, this.days)
     this.tableData = this.calculateTableData(periodicPayment)
-    this.getCashFlows()
+    this.sharedService.cashFlow = this.getCashFlows()
   }
 
   calculateTableData(periodicPayment: PeriodicPayment): Array<PeriodicPayment> {
@@ -223,11 +222,15 @@ export class PaymentTableComponent {
     }
   }
 
-  getCashFlows() {
+  getCashFlows(): number[] {
     let tableSize: number = this.tableData.length
+    let cashFlow: number[] = []
+    let initialPayment: number = this.financialService.calculateInitialPayment(this.loan.initialPaymentPercentage, this.loan.realStatePrice)
 
-    for (let i = 0; i < tableSize; i++) {
-      this.sharedService.cashFlow.push(this.tableData[i].cashFlow)
+    for (let i: number = 0; i < tableSize; i++) {
+      cashFlow.push(this.tableData[i].cashFlow)
     }
+    cashFlow.push(initialPayment)
+    return cashFlow
   }
 }
