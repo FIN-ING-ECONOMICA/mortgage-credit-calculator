@@ -1,1 +1,27 @@
-<p>van-tir works!</p>
+<div class="page-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Fechas</th>
+        <th>Flujos</th>
+        <th>Flujo Actual</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ dates[0].format("DD/MM/YYYY") }}</td>
+        <td>{{ -cashFlow.cashFlowInitialPayment }}</td>
+        <td>{{ -cashFlow.cashFlowInitialPayment }}</td>
+      </tr>
+      <tr *ngFor="let cash of cashFlow.cashFlowArray; let i = index">
+        <td>{{ dates[i + 1].format("DD/MM/YYYY") }}</td>
+        <td>{{ this.roundToNDecimals(cash, 2) }}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><b>VAN</b></td>
+        <td class="result" colspan="2"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
