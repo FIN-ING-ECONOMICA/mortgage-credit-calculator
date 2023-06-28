@@ -7,7 +7,7 @@ import { Loan } from "../models/loan";
 export class SharedService {
 
   loan: Loan = {} as Loan
-  cashFlow: number[] = []
+  cashFlow: { cashFlowArray: number[], cashFlowInitialPayment: number } = {} as { cashFlowArray: number[], cashFlowInitialPayment: number }
 
   constructor() { }
 

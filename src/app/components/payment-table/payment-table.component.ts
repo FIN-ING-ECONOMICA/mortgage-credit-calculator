@@ -223,16 +223,16 @@ export class PaymentTableComponent {
     }
   }
 
-  getCashFlows(): number[] {
+  getCashFlows(): { cashFlowArray: number[], cashFlowInitialPayment: number } {
     let tableSize: number = this.tableData.length
-    let cashFlow: number[] = []
-    let initialPayment: number = this.financialService.calculateInitialPayment(this.loan.initialPaymentPercentage, this.loan.realStatePrice)
+    let cashFlowArray: number[] = []
+    let cashFlowInitialPayment: number = this.financialService.calculateInitialPayment(this.loan.initialPaymentPercentage, this.loan.realStatePrice)
 
     for (let i: number = 0; i < tableSize; i++) {
-      cashFlow.push(this.tableData[i].cashFlow)
+      cashFlowArray.push(this.tableData[i].cashFlow)
     }
-    cashFlow.push(initialPayment)
-    return cashFlow
+
+    return  { cashFlowArray, cashFlowInitialPayment }
   }
 
   savePayment() {
