@@ -9,6 +9,7 @@ import { TimeService } from "../../services/time.service";
 import * as moment from "moment";
 import { Moment } from "moment";
 import { RouterLink } from "@angular/router";
+import { DatabaseService } from "../../services/database.service";
 
 @Component({
   selector: 'app-payment-table',
@@ -49,7 +50,7 @@ export class PaymentTableComponent {
   days: number[] = []
   teps: number[] = []
 
-  constructor(private sharedService: SharedService, private financialService: FinancialService, private timeService: TimeService) {
+  constructor(private sharedService: SharedService, private financialService: FinancialService, private timeService: TimeService, private databaseService: DatabaseService) {
     this.loan = this.sharedService.loan
     this.currency = this.financialService.getCurrency(this.loan)
     this.roundToNDecimals = this.sharedService.roundToNDecimals
@@ -232,5 +233,9 @@ export class PaymentTableComponent {
     }
     cashFlow.push(initialPayment)
     return cashFlow
+  }
+
+  savePayment() {
+    this.databaseService.savePayment(this.tableData[0], this.sharedService.loan)
   }
 }
