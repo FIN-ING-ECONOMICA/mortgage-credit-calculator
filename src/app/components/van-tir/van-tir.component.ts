@@ -20,13 +20,18 @@ export class VanTirComponent {
   dates: Moment[] = []
   cashFlow: { cashFlowArray: number[], cashFlowInitialPayment: number }
   roundToNDecimals: (num: (number | string), decimalPositions: number) => number
+  van: number = 0
+  presentCashFlows: number[] = []
+  currency: string = ''
 
   constructor(private sharedService: SharedService, private timeService: TimeService, private financialService: FinancialService) {
     this.roundToNDecimals = this.sharedService.roundToNDecimals
     this.loan = this.sharedService.loan
+    this.currency = this.financialService.getCurrency(this.loan)
     this.cashFlow = this.sharedService.cashFlow
     this.dates = this.getDates()
-    this.getVAN()
+    this.presentCashFlows = this.getPresentCashFlows()
+    this.van = this.getVAN()
     this.getTIR()
   }
 
@@ -38,17 +43,34 @@ export class VanTirComponent {
     return dates
   }
 
-  getVAN() {
+  getVAN(): number {
     let startDate: Moment = this.dates[0]
     let paymentAtTimeZero: number = this.cashFlow.cashFlowInitialPayment * -1
 
     let van: number = this.financialService.calculateVan(this.dates, startDate, this.cashFlow.cashFlowArray, this.loan.tea, paymentAtTimeZero)
+    return van
+  }
+
+  getPresentCashFlows(): number[] {
+    let periods: number = this.cashFlow.cashFlowArray.length
+    let presentCashFlows: number[] = [];
+    let cashFlowBroughtToPresent: number = 0;
+    let daysDifference: number = 0;
+    let startDate = this.dates[0]
+
+    for (let i: number = 1; i <= periods; i++) {
+      daysDifference = this.timeService.calculateDateDifference(startDate, this.dates[i])
+      cashFlowBroughtToPresent = this.financialService.bringToPresent(this.cashFlow.cashFlowArray[i - 1], this.loan.tea, daysDifference)
+      presentCashFlows.push(cashFlowBroughtToPresent)
+    }
+
+    return presentCashFlows
   }
 
   getTIR() {
     let startDate: Moment = this.dates[0]
     let paymentAtTimeZero: number = this.cashFlow.cashFlowInitialPayment * -1
 
-    let tir: number = this.financialService.calculateTir(this.dates, startDate, this.cashFlow.cashFlowArray,0, 1e-6, paymentAtTimeZero)
+    //let tir: number = this.financialService.calculateTir(this.dates, startDate, this.cashFlow.cashFlowArray,0, 1e-6, paymentAtTimeZero)
   }
 }
