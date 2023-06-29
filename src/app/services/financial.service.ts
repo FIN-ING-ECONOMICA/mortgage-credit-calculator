@@ -79,8 +79,8 @@ export class FinancialService {
     return insuredAmount * ((allRiskInsurancePercentage / 100) / (360 / paymentFrequency))
   }
 
-  bringToPresent(futureValue:number, tea: number, days: number): number {
-    let presentValue = futureValue / ((1 + (tea / 100)) ** (days / 360))
+  bringToPresent(futureValue: number, tea: number, days: number): number {
+    let presentValue: number = futureValue / ((1 + (tea / 100)) ** (days / 360))
     return presentValue
   }
 
@@ -88,7 +88,7 @@ export class FinancialService {
     return lastIterationPayment + extraPayment
   }
 
-  calculateVan(dates: Moment[], startDate: Moment, cashFlow: number[], cok: number, initialPayment: number = 0): number {
+  calculateVan(dates: Moment[], startDate: Moment, cashFlow: number[], cok: number, cashFlowInitialPayment: number = 0): number {
     let periods: number = cashFlow.length
     let presentCashFlows: number[] = [];
     let cashFlowBroughtToPresent: number = 0;
@@ -100,7 +100,60 @@ export class FinancialService {
       presentCashFlows.push(cashFlowBroughtToPresent)
     }
 
-    let van: number = initialPayment + presentCashFlows.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    let van: number = cashFlowInitialPayment + presentCashFlows.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     return van
+  }
+
+  calculateTIR(dates: Moment[], cashFlow: number[], cashFlowInitialPayment: number): number {
+    let min: number = 0.0
+    let max: number = 1.0
+    let van: number = 0
+    let guess: number = 0.5
+
+    do {
+      guess = (min + max) / 2
+      van = this.calculateVan(dates, dates[0], cashFlow, guess, cashFlowInitialPayment)
+
+      if (van > 0) {
+        min = guess
+      } else {
+        max = guess
+      }
+    } while (Math.abs(van) > 0.000001);
+
+    return guess * 100
+  }
+
+  _calculateTIR(dates: Moment[], cashFlow: number[], cashFlowInitialPayment: number = 0): number {
+    let min: number = -1.0
+    let max: number = 1.0
+    let guess: number = 0
+
+    const calculateVan = (guess: number): number => {
+      let van: number = 0
+      for (let i = 0; i < cashFlow.length; i++) {
+        const timeDifference = dates[i].diff(dates[0], 'days') / 360
+        van += cashFlow[i] / Math.pow(1 + guess, timeDifference)
+      }
+      return van + cashFlowInitialPayment
+    }
+
+    let van: number = 0
+    do {
+      guess = (min + max) / 2
+      van = calculateVan(guess)
+
+      if (Math.abs(van) < 0.000001) {
+        break;
+      }
+
+      if (van > 0) {
+        min = guess
+      } else {
+        max = guess
+      }
+    } while (max - min > 0.000001)
+
+    return guess * 100
   }
 }
