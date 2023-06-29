@@ -1,28 +1,30 @@
-<div class="page-container">
-  <h1>VAN y TIR</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Fechas</th>
-        <th>Flujos</th>
-        <th>Flujo Actual</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{ dates[0].format("DD/MM/YYYY") }}</td>
-        <td>{{ currency + ' ' + -cashFlow.cashFlowInitialPayment }}</td>
-        <td>{{ currency + ' ' + -cashFlow.cashFlowInitialPayment }}</td>
-      </tr>
-      <tr *ngFor="let cash of cashFlow.cashFlowArray; let i = index">
-        <td>{{ dates[i + 1].format("DD/MM/YYYY") }}</td>
-        <td>{{ currency + ' ' + this.roundToNDecimals(cash, 2) }}</td>
-        <td>{{ currency + ' ' + this.roundToNDecimals(presentCashFlows[i], 2) }}</td>
-      </tr>
-      <tr>
-        <td><b>VAN</b></td>
-        <td class="result" colspan="2">{{  currency + ' ' + this.roundToNDecimals(van, 2) }}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="background">
+  <div class="page-container">
+    <h1>VAN</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Fechas</th>
+          <th>Flujos</th>
+          <th>Flujo Actual</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ dates[0].format("DD/MM/YYYY") }}</td>
+          <td>{{ currency + ' ' + -cashFlow.cashFlowInitialPayment }}</td>
+          <td>{{ currency + ' ' + -cashFlow.cashFlowInitialPayment }}</td>
+        </tr>
+        <tr *ngFor="let cash of cashFlow.cashFlowArray; let i = index">
+          <td>{{ dates[i + 1].format("DD/MM/YYYY") }}</td>
+          <td>{{ currency + ' ' + this.roundToNDecimals(cash, 2) }}</td>
+          <td>{{ currency + ' ' + this.roundToNDecimals(presentCashFlows[i], 2) }}</td>
+        </tr>
+        <tr>
+          <td><b>VAN</b></td>
+          <td class="result" colspan="2">{{  currency + ' ' + this.roundToNDecimals(van, 2) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

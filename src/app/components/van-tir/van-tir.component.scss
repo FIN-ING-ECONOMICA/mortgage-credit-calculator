@@ -1,5 +1,14 @@
+.background {
+  background-color: var(--background-color);
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
 .page-container {
   padding: 1% 2%;
+  background-color: var(--background-color-2);
 }
 
 table {
