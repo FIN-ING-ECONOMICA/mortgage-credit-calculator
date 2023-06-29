@@ -75,7 +75,7 @@ export class PaymentTableComponent {
 
     let allRiskInsurance = this.financialService.calculateAllRiskInsurance(periodicPayment.insuredAmount, periodicPayment.allRiskInsurancePercentage, this.timeService.getFrequencyValue(periodicPayment.paymentFrequency))
 
-    for (let i: number = 0; i < 20; i++) {
+    for (let i: number = 0; i < 1000; i++) {
 
       if (i === 0) {
         payment = this.financialService.calculatePeriodicPayment(periodicPayment.initialBalance, this.teps[0] + periodicPayment.mortgageLifeInsurancePercentage, periodicPayment.periods, 1)
