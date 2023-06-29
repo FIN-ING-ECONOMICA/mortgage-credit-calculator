@@ -71,6 +71,7 @@ export class VanTirComponent {
     let startDate: Moment = this.dates[0]
     let paymentAtTimeZero: number = this.cashFlow.cashFlowInitialPayment * -1
 
-    //let tir: number = this.financialService.calculateTir(this.dates, startDate, this.cashFlow.cashFlowArray,0, 1e-6, paymentAtTimeZero)
+    let tir: number = this.financialService._calculateTIR(this.dates, this.cashFlow.cashFlowArray, paymentAtTimeZero)
+    console.log('TIR:', tir)
   }
 }
