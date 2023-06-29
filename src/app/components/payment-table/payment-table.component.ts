@@ -210,7 +210,7 @@ export class PaymentTableComponent {
     this.tableData[rowIndex].tea = this.newTea
     this.tableData[rowIndex].gracePeriod = this.gracePeriodSelected
 
-    //this.updateTable()
+    this.updateTable()
 
     periodicPayment.edit = !periodicPayment.edit;
   }
@@ -237,5 +237,64 @@ export class PaymentTableComponent {
 
   savePayment() {
     this.databaseService.savePayment(this.tableData[0], this.sharedService.loan)
+  }
+
+  updateTable(): void {
+    let tableSize = this.tableData.length
+    let currentPayment: PeriodicPayment = {} as PeriodicPayment
+
+    let interestAmount: number
+    let periodicPayment: number = 0
+    let mortgageLifeInsurance: number = 0
+    let amortization: number
+    let finalBalance: number
+    let cashFlow: number = 0
+
+    for (let i = 0; i < tableSize; i++) {
+
+      currentPayment = this.tableData[i]
+
+      // calculate initial balance
+      if (i > 0) {
+        currentPayment.initialBalance = this.tableData[i - 1].finalBalance
+      } else {
+        currentPayment.initialBalance = currentPayment.initialBalance
+      }
+
+      interestAmount = this.financialService.calculateInterestAmount(currentPayment.initialBalance, currentPayment.tep)
+
+      mortgageLifeInsurance = this.financialService.calculateMortgageLifeInsurance(currentPayment.initialBalance, currentPayment.mortgageLifeInsurancePercentage, this.days[i], this.timeService.getFrequencyValue(currentPayment.paymentFrequency))
+
+      // PERIODO DE GRACIA PARCIAL FUNCIONA
+      if (currentPayment.gracePeriod === 'Parcial') {
+        periodicPayment = interestAmount
+        amortization = 0
+
+        finalBalance = this.financialService.calculateFinalBalance(currentPayment.initialBalance + currentPayment.costs + mortgageLifeInsurance, amortization)
+
+        cashFlow = this.financialService.calculateCashFlow(periodicPayment, currentPayment.allRiskInsurance)
+      } else if (currentPayment.gracePeriod === 'Total') {
+        periodicPayment = 0
+        amortization = 0
+
+        finalBalance = this.financialService.calculateFinalBalance(currentPayment.initialBalance + currentPayment.costs + mortgageLifeInsurance + currentPayment.allRiskInsurance + interestAmount, amortization)
+
+        cashFlow = periodicPayment
+      } else {
+        periodicPayment = this.financialService.calculatePeriodicPayment(currentPayment.initialBalance, currentPayment.tep, currentPayment.periods, i + 1)
+        amortization = this.financialService.calculateAmortization(periodicPayment, interestAmount, [currentPayment.costs, mortgageLifeInsurance])
+        finalBalance = this.financialService.calculateFinalBalance(currentPayment.initialBalance, amortization)
+
+        cashFlow = this.financialService.calculateCashFlow(periodicPayment, currentPayment.allRiskInsurance)
+      }
+
+      this.tableData[i].initialBalance = currentPayment.initialBalance
+      this.tableData[i].interestAmount = interestAmount
+      this.tableData[i].periodicPayment = periodicPayment
+      this.tableData[i].mortgageLifeInsurance = mortgageLifeInsurance
+      this.tableData[i].amortization = amortization
+      this.tableData[i].finalBalance = finalBalance
+      this.tableData[i].cashFlow = cashFlow
+    }
   }
 }
