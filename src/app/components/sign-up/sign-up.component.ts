@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { AuthService } from "../../services/auth.service";
 import { User } from "../../models/user";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-sign-up',
@@ -22,7 +23,7 @@ export class SignUpComponent {
     homeAddress: new FormControl('')
   });
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   submitForm() {
@@ -36,6 +37,8 @@ export class SignUpComponent {
       homeAddress: this.signUpForm.value.homeAddress ?? ''
     }
 
-    this.authService.createUser(user).subscribe();
+    this.authService.createUser(user).subscribe(() => {
+      this.router.navigate(['/loan-application'])
+    });
   }
 }
