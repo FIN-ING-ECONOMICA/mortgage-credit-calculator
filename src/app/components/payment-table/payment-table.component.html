@@ -8,10 +8,7 @@
   <tr *ngFor="let row of tableData">
     <td>{{ row.paymentIndex }}</td>
     <td>
-      <div class="edit-tea" *ngIf="row.edit">
-        <input [placeholder]="row.tea" [(ngModel)]="newTea" type="number" (input)="onTeaInput($event)">
-      </div>
-      <div *ngIf="!row.edit">{{ row.tea }}%</div>
+      <div>{{ row.tea }}%</div>
     </td>
     <td>{{ this.roundToNDecimals(row.tep, 7) }}%</td>
     <td>
