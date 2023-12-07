@@ -226,7 +226,7 @@ export class PaymentTableComponent {
   getCashFlows(): { cashFlowArray: number[], cashFlowInitialPayment: number } {
     let tableSize: number = this.tableData.length
     let cashFlowArray: number[] = []
-    let cashFlowInitialPayment: number = this.financialService.calculateInitialPayment(this.loan.initialPaymentPercentage, this.loan.realStatePrice)
+    let cashFlowInitialPayment: number = this.tableData[0].initialBalance;
 
     for (let i: number = 0; i < tableSize; i++) {
       cashFlowArray.push(this.tableData[i].cashFlow)
