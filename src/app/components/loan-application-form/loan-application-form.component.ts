@@ -15,7 +15,7 @@ import { TimeService } from "../../services/time.service";
 })
 export class LoanApplicationFormComponent {
 
-  loanForm   = new FormGroup({
+  loanForm = new FormGroup({
     realStatePrice: new FormControl('', [Validators.required, Validators.min(0)]),
     initialPaymentPercentage: new FormControl('', [Validators.required, Validators.min(7.5)]),
     tea: new FormControl('', [Validators.required, Validators.min(0)]),
